@@ -14,8 +14,8 @@ import { RightPanelShell } from "./components/rightpanel/RightPanelShell";
 import { parseWrestlerDat, type Worker } from "./ewr/parseWrestlerDat";
 import { parsePromosDat, type PromoRecord } from "./ewr/parsePromosDat";
 import { alertWarning, confirmWarning } from "./utils/dialogs";
-
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+
 // ---------------- CSV helpers (kept local to match other editors) ----------------
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");

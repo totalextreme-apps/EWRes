@@ -15,8 +15,8 @@ import LeftPanelActionGrid from "./components/leftpanel/LeftPanelActionGrid";
 import { RightPanelShell } from "./components/rightpanel/RightPanelShell";
 import { EditorHeader } from "./components/rightpanel/EditorHeader";
 import { IconChecklist, IconGrid, IconImport, IconPlus } from "./components/icons/EwrIcons";
-
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
   const slash = normalized.lastIndexOf("/");

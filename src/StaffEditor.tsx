@@ -7,7 +7,6 @@ import LeftPanelSearchHeader from "./components/leftpanel/LeftPanelSearchHeader"
 import LeftPanelNameCard from "./components/leftpanel/LeftPanelNameCard";
 import LeftPanelActionGrid from "./components/leftpanel/LeftPanelActionGrid";
 import { IconChecklist, IconGrid, IconImport, IconPlus } from "./components/icons/EwrIcons";
-import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 // Tauri v2 plugins
 import { open, save } from "@tauri-apps/plugin-dialog";
 import {readFile, writeFile, exists, copyFile, mkdir} from "@tauri-apps/plugin-fs";
@@ -17,6 +16,7 @@ import { validateStaffDatBytes, STAFF_LAYOUT } from "./ewr/validateStaffDat";
 import { writeStaffDat } from "./ewr/writeStaffDat";
 
 import { parsePromosDat, type Promo } from "./ewr/parsePromosDat";
+import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");

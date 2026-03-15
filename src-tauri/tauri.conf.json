@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "EWR Editing Suite",
+  "productName": "EWR 4.2 WRESTLER.DAT Editor",
   "version": "0.2.5",
   "identifier": "com.totalextremeapps.ewr-editor",
   "build": {

@@ -6,7 +6,6 @@ import LeftPanelSearchHeader from "./components/leftpanel/LeftPanelSearchHeader"
 import LeftPanelNameCard from "./components/leftpanel/LeftPanelNameCard";
 import LeftPanelActionGrid from "./components/leftpanel/LeftPanelActionGrid";
 
-import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 // Tauri v2 plugins
 import { open, save } from "@tauri-apps/plugin-dialog";
 import {readFile, writeFile, exists, copyFile, mkdir} from "@tauri-apps/plugin-fs";
@@ -14,6 +13,7 @@ import {readFile, writeFile, exists, copyFile, mkdir} from "@tauri-apps/plugin-f
 import { parseSponsorDat, type Sponsor } from "./ewr/parseSponsorDat";
 import { writeSponsorDat } from "./ewr/writeSponsorDat";
 import { validateSponsorDatBytes } from "./ewr/validateSponsorDat";
+import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 
 // Rendered within the app's global section navigation (App.tsx provides the top header nav).
 

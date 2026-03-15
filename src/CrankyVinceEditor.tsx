@@ -11,8 +11,8 @@ import { parseWrestlerDat, type Worker } from "./ewr/parseWrestlerDat";
 import { GIMMICKS } from "./ewr/gimmicks";
 import { toArrayBuffer } from "./ewr/toArrayBuffer";
 import crankyVinceLogo from "./assets/cranky_vince_logo.png";
-
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+
 type Props = { workspaceRoot?: string; onClose?: () => void };
 
 type SessionEntry = {

@@ -4,7 +4,6 @@ import {copyFile, exists, readFile, writeFile, mkdir} from "@tauri-apps/plugin-f
 
 import LeftPanelFileActions from "./components/leftpanel/LeftPanelFileActions";
 import LeftPanelSearchHeader from "./components/leftpanel/LeftPanelSearchHeader";
-import EwrSelect from "./components/inputs/EwrSelect";
 import LeftPanelNameCard from "./components/leftpanel/LeftPanelNameCard";
 import LeftPanelActionGrid from "./components/leftpanel/LeftPanelActionGrid";
 import { RightPanelShell } from "./components/rightpanel/RightPanelShell";
@@ -15,8 +14,8 @@ import { parseEventDat, type EventMonthId, type EventRecord, type EventShowType 
 import { validateEventDatBytes } from "./ewr/validateEventDat";
 import { writeEventDat } from "./ewr/writeEventDat";
 import { parsePromosDat, type Promo } from "./ewr/parsePromosDat";
-
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
   const slash = normalized.lastIndexOf("/");
@@ -701,41 +700,53 @@ export default function EventsEditor(props: Props) {
       <div className="ewr-filterGrid">
         <div className="ewr-field">
           <div className="ewr-label">Promotion</div>
-          <EwrSelect
-            value={String(draftFilters.promotionId)}
-            onChange={(next) => setDraftFilters((prev) => ({ ...prev, promotionId: next as FilterPick }))}
-            options={[
-              { value: "Everyone", label: "Any" },
-              ...promos
-                .slice()
-                .sort((a, b) => String(a.name || "").localeCompare(String(b.name || ""), undefined, { sensitivity: "base" }))
-                .map((promo) => ({ value: String(promo.id), label: promo.name || `(Promotion #${promo.id})` })),
-            ]}
-          />
+          <EwrSelectCompat
+            className="ewr-input"
+            value={draftFilters.promotionId}
+            onChange={(e) => setDraftFilters((prev) => ({ ...prev, promotionId: e.target.value as FilterPick }))}
+          >
+            <option value="Everyone">Any</option>
+            {promos
+              .slice()
+              .sort((a, b) => String(a.name || "").localeCompare(String(b.name || ""), undefined, { sensitivity: "base" }))
+              .map((promo) => (
+                <option key={promo.id} value={String(promo.id)}>
+                  {promo.name || `(Promotion #${promo.id})`}
+                </option>
+              ))}
+          </EwrSelectCompat>
         </div>
 
         <div className="ewr-field">
           <div className="ewr-label">Type of Show</div>
-          <EwrSelect
-            value={String(draftFilters.showType)}
-            onChange={(next) => setDraftFilters((prev) => ({ ...prev, showType: next as FilterPick }))}
-            options={[
-              { value: "Everyone", label: "Any" },
-              ...SHOW_TYPE_OPTIONS.map((opt) => ({ value: String(opt.value), label: opt.label })),
-            ]}
-          />
+          <EwrSelectCompat
+            className="ewr-input"
+            value={draftFilters.showType}
+            onChange={(e) => setDraftFilters((prev) => ({ ...prev, showType: e.target.value as FilterPick }))}
+          >
+            <option value="Everyone">Any</option>
+            {SHOW_TYPE_OPTIONS.map((opt) => (
+              <option key={opt.value} value={String(opt.value)}>
+                {opt.label}
+              </option>
+            ))}
+          </EwrSelectCompat>
         </div>
 
         <div className="ewr-field">
           <div className="ewr-label">Month</div>
-          <EwrSelect
-            value={String(draftFilters.month)}
-            onChange={(next) => setDraftFilters((prev) => ({ ...prev, month: next as FilterPick }))}
-            options={[
-              { value: "Everyone", label: "Any" },
-              ...MONTH_OPTIONS.map((opt) => ({ value: String(opt.value), label: opt.label })),
-            ]}
-          />
+          <EwrSelectCompat
+            className="ewr-input"
+            value={draftFilters.month}
+            onChange={(e) => setDraftFilters((prev) => ({ ...prev, month: e.target.value as FilterPick }))}
+          >
+            <option value="Everyone">Any</option>
+            {MONTH_OPTIONS.map((opt) => (
+              <option key={opt.value} value={String(opt.value)}>
+                {opt.label}
+              </option>
+            ))}
+          </EwrSelectCompat>
         </div>
       </div>
     </div>

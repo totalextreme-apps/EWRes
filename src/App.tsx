@@ -12,7 +12,6 @@ import { GIMMICKS } from "./ewr/gimmicks";
 import { GIMMICK_REQUIREMENT_RULES, type GimmickRequirementRule } from "./ewr/gimmickRequirements";
 import { parsePromosDat, type Promo, type PromoRecord } from "./ewr/parsePromosDat";
 
-import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 // Tauri v2 plugins
 import { open, save } from "@tauri-apps/plugin-dialog";
 import { readFile, writeFile, exists, copyFile, mkdir } from "@tauri-apps/plugin-fs";
@@ -52,6 +51,7 @@ import LeftPanelSearchHeader from "./components/leftpanel/LeftPanelSearchHeader"
 import LeftPanelNameCard from "./components/leftpanel/LeftPanelNameCard";
 import LeftPanelActionGrid from "./components/leftpanel/LeftPanelActionGrid";
 import { RightPanelShell } from "./components/rightpanel/RightPanelShell";
+import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 
 // Gimmick dropdown: display by name and sort alphabetically, while keeping IDs intact.
 // If multiple gimmicks share the same name, append the ID to disambiguate.

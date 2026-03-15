@@ -18,8 +18,8 @@ import { parseNetworkDat, type NetworkRecord } from "./ewr/parseNetworkDat";
 import { parseStaffDat, type Staff } from "./ewr/parseStaffDat";
 import { parseWrestlerDat, type Worker } from "./ewr/parseWrestlerDat";
 import { toArrayBuffer } from "./ewr/toArrayBuffer";
-
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
   const slash = normalized.lastIndexOf("/");

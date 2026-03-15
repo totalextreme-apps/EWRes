@@ -156,17 +156,30 @@ function guessImageMimeFromPath(filePath: string): string {
   return 'application/octet-stream';
 }
 
-function deriveLogosFolderFromWorkspace(workspaceRoot: string): string {
-  const raw = String(workspaceRoot ?? "").trim();
+function deriveSiblingFolderFromWorkspace(workspaceRoot: string, folderName: string): string {
+  const raw = String(workspaceRoot ?? "").trim().replace(/[\\/]+$/, "");
   if (!raw) return "";
-  return raw.replace(/[\/]DATA$/i, (m) => m[0] === "\\" ? "\\LOGOS" : "/LOGOS");
+  const sep = raw.includes("\\") ? "\\" : "/";
+  const parts = raw.split(/[\\/]+/).filter(Boolean);
+  if (!parts.length) return "";
+  const last = parts[parts.length - 1].toLowerCase();
+  if (last === "data") {
+    parts[parts.length - 1] = folderName;
+    return parts.join(sep);
+  }
+  if (/^s\d+$/i.test(last)) {
+    parts.pop();
+    return [...parts, folderName].join(sep);
+  }
+  return [...parts, folderName].join(sep);
 }
 
+function deriveLogosFolderFromWorkspace(workspaceRoot: string): string {
+  return deriveSiblingFolderFromWorkspace(workspaceRoot, "LOGOS");
+}
 
 function deriveBannersFolderFromWorkspace(workspaceRoot: string): string {
-  const raw = String(workspaceRoot ?? "").trim();
-  if (!raw) return "";
-  return raw.replace(/[\/]DATA$/i, (m) => m[0] === "\\" ? "\\Banners" : "/Banners");
+  return deriveSiblingFolderFromWorkspace(workspaceRoot, "Banners");
 }
 
 async function findImageCandidateCaseInsensitive(dir: string, baseName: string): Promise<string> {
@@ -448,6 +461,8 @@ export default function PromotionsEditor(props: {
   const [bannerPreviewUrl, setBannerPreviewUrl] = useState<string>("");
   const [bannerPreviewStatus, setBannerPreviewStatus] = useState<string>("");
   const bannerPreviewObjectUrlRef = useRef<string>("");
+  const effectiveLogosFolderPath = logosFolderPath || deriveLogosFolderFromWorkspace(workspaceRoot);
+  const effectiveBannersFolderPath = bannersFolderPath || deriveBannersFolderFromWorkspace(workspaceRoot);
 
   const canLoadFromData = !!workspaceRoot && !!promosDataPath;
   const canSave = promos.length > 0 && !!rawBytes && dirty;
@@ -1126,17 +1141,12 @@ export default function PromotionsEditor(props: {
   }, [logosFolderPath]);
 
   useEffect(() => {
-    const derived = deriveLogosFolderFromWorkspace(workspaceRoot);
-    if (derived) setLogosFolderPath((prev) => prev || derived);
-  }, [workspaceRoot]);
-
-  useEffect(() => {
     let cancelled = false;
 
     (async () => {
       const currentLogoBase = sanitizeAndTruncateImageBase(stripImageExtension(String(selected?.logoBase ?? "None")), 20);
 
-      if (!logosFolderPath) {
+      if (!effectiveLogosFolderPath) {
         if (!cancelled) {
           if (logoPreviewObjectUrlRef.current) {
             URL.revokeObjectURL(logoPreviewObjectUrlRef.current);
@@ -1163,12 +1173,12 @@ export default function PromotionsEditor(props: {
       }
 
       const candidates = [
-        joinPath(logosFolderPath, `${currentLogoBase}.jpg`),
-        joinPath(logosFolderPath, `${currentLogoBase}.jpeg`),
-        joinPath(logosFolderPath, `${currentLogoBase}.png`),
-        joinPath(logosFolderPath, `${currentLogoBase}.gif`),
-        joinPath(logosFolderPath, `${currentLogoBase}.bmp`),
-        joinPath(logosFolderPath, currentLogoBase),
+        joinPath(effectiveLogosFolderPath, `${currentLogoBase}.jpg`),
+        joinPath(effectiveLogosFolderPath, `${currentLogoBase}.jpeg`),
+        joinPath(effectiveLogosFolderPath, `${currentLogoBase}.png`),
+        joinPath(effectiveLogosFolderPath, `${currentLogoBase}.gif`),
+        joinPath(effectiveLogosFolderPath, `${currentLogoBase}.bmp`),
+        joinPath(effectiveLogosFolderPath, currentLogoBase),
       ];
 
       let resolvedCandidate = "";
@@ -1183,7 +1193,7 @@ export default function PromotionsEditor(props: {
       }
 
       if (!resolvedCandidate) {
-        resolvedCandidate = await findImageCandidateCaseInsensitive(logosFolderPath, currentLogoBase);
+        resolvedCandidate = await findImageCandidateCaseInsensitive(effectiveLogosFolderPath, currentLogoBase);
       }
 
       if (resolvedCandidate) {
@@ -1239,17 +1249,12 @@ export default function PromotionsEditor(props: {
   }, [bannersFolderPath]);
 
   useEffect(() => {
-    const derived = deriveBannersFolderFromWorkspace(workspaceRoot);
-    if (derived) setBannersFolderPath((prev) => prev || derived);
-  }, [workspaceRoot]);
-
-  useEffect(() => {
     let cancelled = false;
 
     (async () => {
       const currentBannerBase = sanitizeAndTruncateImageBase(stripImageExtension(String(selected?.bannerBase ?? "None")), 20);
 
-      if (!bannersFolderPath) {
+      if (!effectiveBannersFolderPath) {
         if (!cancelled) {
           if (bannerPreviewObjectUrlRef.current) {
             URL.revokeObjectURL(bannerPreviewObjectUrlRef.current);
@@ -1276,12 +1281,12 @@ export default function PromotionsEditor(props: {
       }
 
       const candidates = [
-        joinPath(bannersFolderPath, `${currentBannerBase}.jpg`),
-        joinPath(bannersFolderPath, `${currentBannerBase}.jpeg`),
-        joinPath(bannersFolderPath, `${currentBannerBase}.png`),
-        joinPath(bannersFolderPath, `${currentBannerBase}.gif`),
-        joinPath(bannersFolderPath, `${currentBannerBase}.bmp`),
-        joinPath(bannersFolderPath, currentBannerBase),
+        joinPath(effectiveBannersFolderPath, `${currentBannerBase}.jpg`),
+        joinPath(effectiveBannersFolderPath, `${currentBannerBase}.jpeg`),
+        joinPath(effectiveBannersFolderPath, `${currentBannerBase}.png`),
+        joinPath(effectiveBannersFolderPath, `${currentBannerBase}.gif`),
+        joinPath(effectiveBannersFolderPath, `${currentBannerBase}.bmp`),
+        joinPath(effectiveBannersFolderPath, currentBannerBase),
       ];
 
       let resolvedCandidate = "";
@@ -1296,7 +1301,7 @@ export default function PromotionsEditor(props: {
       }
 
       if (!resolvedCandidate) {
-        resolvedCandidate = await findImageCandidateCaseInsensitive(bannersFolderPath, currentBannerBase);
+        resolvedCandidate = await findImageCandidateCaseInsensitive(effectiveBannersFolderPath, currentBannerBase);
       }
 
       if (resolvedCandidate) {
@@ -2409,7 +2414,7 @@ const blank = makeBlankPromoRecord(next);
                             directory: true,
                             multiple: false,
                             title: "Select EWR LOGOS folder",
-                            defaultPath: logosFolderPath || deriveLogosFolderFromWorkspace(workspaceRoot) || workspaceRoot || undefined,
+                            defaultPath: effectiveLogosFolderPath || workspaceRoot || undefined,
                           });
                           if (!picked) return;
                           const dir = Array.isArray(picked) ? String(picked[0]) : String(picked);
@@ -2437,7 +2442,7 @@ const blank = makeBlankPromoRecord(next);
                 </div>
                 <div className="ewr-sectionBody">
                   <div className="ewr-workerPhotoMeta ewr-hint" style={{ marginBottom: 14 }}>
-                    <div>LOGOS folder: {logosFolderPath ? logosFolderPath : "Not set"}</div>
+                    <div>LOGOS folder: {effectiveLogosFolderPath ? effectiveLogosFolderPath : "Not set"}</div>
                     <div style={{ marginTop: 2 }}>
                       {logoPreviewStatus || (logoPreviewPath ? `Loaded: ${logoPreviewPath}` : "")}
                     </div>
@@ -2463,7 +2468,7 @@ const blank = makeBlankPromoRecord(next);
                             const picked = await open({
                               multiple: false,
                               title: "Select promotion logo",
-                              defaultPath: logosFolderPath || deriveLogosFolderFromWorkspace(workspaceRoot) || workspaceRoot || undefined,
+                              defaultPath: effectiveLogosFolderPath || workspaceRoot || undefined,
                               filters: [{ name: "Images", extensions: ["jpg", "jpeg", "png", "gif", "bmp"] }],
                             });
                             if (!picked) return;
@@ -2537,7 +2542,7 @@ const blank = makeBlankPromoRecord(next);
                             directory: true,
                             multiple: false,
                             title: "Select EWR Banners folder",
-                            defaultPath: bannersFolderPath || deriveBannersFolderFromWorkspace(workspaceRoot) || workspaceRoot || undefined,
+                            defaultPath: effectiveBannersFolderPath || workspaceRoot || undefined,
                           });
                           if (!picked) return;
                           const dir = Array.isArray(picked) ? String(picked[0]) : String(picked);
@@ -2565,7 +2570,7 @@ const blank = makeBlankPromoRecord(next);
                 </div>
                 <div className="ewr-sectionBody">
                   <div className="ewr-workerPhotoMeta ewr-hint" style={{ marginBottom: 14 }}>
-                    <div>Banners folder: {bannersFolderPath ? bannersFolderPath : "Not set"}</div>
+                    <div>Banners folder: {effectiveBannersFolderPath ? effectiveBannersFolderPath : "Not set"}</div>
                     <div style={{ marginTop: 2 }}>
                       {bannerPreviewStatus || (bannerPreviewPath ? `Loaded: ${bannerPreviewPath}` : "")}
                     </div>
@@ -2598,7 +2603,7 @@ const blank = makeBlankPromoRecord(next);
                           const picked = await open({
                             multiple: false,
                             title: "Select promotion banner",
-                            defaultPath: bannersFolderPath || deriveBannersFolderFromWorkspace(workspaceRoot) || workspaceRoot || undefined,
+                            defaultPath: effectiveBannersFolderPath || workspaceRoot || undefined,
                             filters: [{ name: "Images", extensions: ["jpg", "jpeg", "png", "gif", "bmp"] }],
                           });
                           if (!picked) return;

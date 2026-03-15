@@ -13,8 +13,8 @@ import { IconChecklist, IconGrid, IconImport, IconPlus } from "./components/icon
 import { parseNetworkDat, type NetworkRecord } from "./ewr/parseNetworkDat";
 import { validateNetworkDatBytes } from "./ewr/validateNetworkDat";
 import { writeNetworkDat } from "./ewr/writeNetworkDat";
-
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
   const slash = normalized.lastIndexOf("/");

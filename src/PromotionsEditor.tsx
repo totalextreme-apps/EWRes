@@ -162,16 +162,17 @@ function deriveSiblingFolderFromWorkspace(workspaceRoot: string, folderName: str
   const sep = raw.includes("\\") ? "\\" : "/";
   const parts = raw.split(/[\\/]+/).filter(Boolean);
   if (!parts.length) return "";
-  const last = parts[parts.length - 1].toLowerCase();
-  if (last === "data") {
-    parts[parts.length - 1] = folderName;
+  const lowerParts = parts.map((p) => p.toLowerCase());
+  const dataIndex = lowerParts.lastIndexOf("data");
+  if (dataIndex >= 0) {
+    parts[dataIndex] = folderName;
     return parts.join(sep);
   }
+  const last = lowerParts[lowerParts.length - 1] ?? "";
   if (/^s\d+$/i.test(last)) {
-    parts.pop();
-    return [...parts, folderName].join(sep);
+    return parts.slice(0, -1).concat(folderName).join(sep);
   }
-  return [...parts, folderName].join(sep);
+  return parts.slice(0, -1).concat(folderName).join(sep);
 }
 
 function deriveLogosFolderFromWorkspace(workspaceRoot: string): string {

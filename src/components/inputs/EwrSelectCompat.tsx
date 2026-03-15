@@ -37,6 +37,12 @@ function flattenOptions(children: React.ReactNode): NativeOption[] {
   return out;
 }
 
+const MENU_BG = "linear-gradient(180deg, rgba(18, 26, 47, 0.99), rgba(9, 14, 26, 0.99))";
+const MENU_BORDER = "1px solid rgba(110, 126, 173, 0.45)";
+const MENU_TEXT = "#f5f7ff";
+const MENU_HOVER = "rgba(46, 91, 255, 0.22)";
+const MENU_SELECTED = "rgba(255, 255, 255, 0.14)";
+
 export default function EwrSelectCompat({
   value,
   onChange,
@@ -51,6 +57,7 @@ export default function EwrSelectCompat({
 }: Props) {
   const options = useMemo(() => flattenOptions(children), [children]);
   const [open, setOpen] = useState(false);
+  const [hovered, setHovered] = useState<string | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const currentValue = String(value ?? "");
@@ -80,7 +87,7 @@ export default function EwrSelectCompat({
   };
 
   return (
-    <div ref={rootRef} className="ewr-select" style={style}>
+    <div ref={rootRef} className="ewr-select" style={{ position: "relative", width: "100%", ...style }}>
       <button
         ref={buttonRef}
         type="button"
@@ -96,30 +103,71 @@ export default function EwrSelectCompat({
           if (disabled) return;
           setOpen((prev) => !prev);
         }}
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", textAlign: "left" }}
       >
-        <span className="ewr-selectButtonLabel">{selected?.label ?? ""}</span>
-        <span className="ewr-selectChevron">▾</span>
+        <span className="ewr-selectButtonLabel" style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: "1 1 auto" }}>{selected?.label ?? ""}</span>
+        <span className="ewr-selectChevron" style={{ marginLeft: 10, opacity: 0.9, flex: "0 0 auto" }}>▾</span>
       </button>
       {open && !disabled ? (
-        <div className="ewr-selectMenu" role="listbox" aria-labelledby={id}>
-          {options.map((opt) => (
-            <button
-              key={opt.value}
-              type="button"
-              role="option"
-              aria-selected={opt.value === currentValue}
-              disabled={opt.disabled}
-              className={`ewr-selectOption${opt.value === currentValue ? " is-selected" : ""}`}
-              onClick={() => {
-                if (opt.disabled) return;
-                emitChange(opt.value);
-                setOpen(false);
-                buttonRef.current?.focus();
-              }}
-            >
-              {opt.label}
-            </button>
-          ))}
+        <div
+          className="ewr-selectMenu"
+          role="listbox"
+          aria-labelledby={id}
+          style={{
+            position: "absolute",
+            top: "calc(100% + 4px)",
+            left: 0,
+            right: 0,
+            zIndex: 10000,
+            maxHeight: 280,
+            overflow: "auto",
+            borderRadius: 12,
+            border: MENU_BORDER,
+            background: MENU_BG,
+            boxShadow: "0 12px 28px rgba(0,0,0,0.55)",
+            padding: 6,
+            color: MENU_TEXT,
+          }}
+        >
+          {options.map((opt) => {
+            const isSelected = opt.value === currentValue;
+            const isHovered = hovered === opt.value;
+            return (
+              <button
+                key={opt.value}
+                type="button"
+                role="option"
+                aria-selected={isSelected}
+                disabled={opt.disabled}
+                className={`ewr-selectOption${isSelected ? " is-selected" : ""}`}
+                onMouseEnter={() => setHovered(opt.value)}
+                onMouseLeave={() => setHovered((prev) => (prev === opt.value ? null : prev))}
+                onFocus={() => setHovered(opt.value)}
+                onBlur={() => setHovered((prev) => (prev === opt.value ? null : prev))}
+                onClick={() => {
+                  if (opt.disabled) return;
+                  emitChange(opt.value);
+                  setOpen(false);
+                  buttonRef.current?.focus();
+                }}
+                style={{
+                  width: "100%",
+                  display: "block",
+                  textAlign: "left",
+                  border: 0,
+                  borderRadius: 10,
+                  padding: "10px 12px",
+                  cursor: opt.disabled ? "not-allowed" : "pointer",
+                  background: isHovered ? MENU_HOVER : isSelected ? MENU_SELECTED : "transparent",
+                  color: MENU_TEXT,
+                  opacity: opt.disabled ? 0.55 : 1,
+                  font: "inherit",
+                }}
+              >
+                {opt.label}
+              </button>
+            );
+          })}
         </div>
       ) : null}
     </div>

@@ -242,7 +242,44 @@ min-height: 0;
   color: rgba(255, 120, 120, 0.95);
 }
 
-select.ewr-input { cursor: pointer; }
+select.ewr-input {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 36px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.82) 50%),
+    linear-gradient(135deg, rgba(255,255,255,0.82) 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% - 2px),
+    calc(100% - 12px) calc(50% - 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  color-scheme: dark;
+}
+
+select.ewr-input::-ms-expand {
+  display: none;
+}
+
+select.ewr-input option,
+select.ewr-input optgroup {
+  background: #101827;
+  color: #f5f7fb;
+}
+
+html.platform-windows select.ewr-input,
+html.platform-windows select.ewr-input option,
+html.platform-windows select.ewr-input optgroup {
+  background-color: #101827 !important;
+  color: #f5f7fb !important;
+}
+
+html.platform-windows select.ewr-input:disabled,
+html.platform-windows select.ewr-input:disabled option {
+  color: rgba(245, 247, 251, 0.55) !important;
+}
 
 .ewr-button {
   padding: 10px 12px;

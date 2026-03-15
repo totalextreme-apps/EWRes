@@ -5286,13 +5286,7 @@ closeCsvModal();
             closeFile={{
               onClick: async () => {
                 if (!filePath && !workers.length) return;
-                if (wrestlersDirty) {
-                  const ok = window.confirm("You have unsaved changes. Save before closing?\n\nOK = Save, Cancel = Close without saving");
-                  if (ok) {
-                    await onSave("wrestler");
-                    if (wrestlersDirty) return;
-                  }
-                }
+                // Intentionally close without confirmation for the Wrestlers editor.
                 setFilePath(null);
                 setRawBytes(null);
                 setWorkers([]);

@@ -178,6 +178,14 @@ function deriveSiblingFolderFromWorkspace(workspaceRoot: string, folderName: str
   return parts.slice(0, -1).concat(folderName).join(sep);
 }
 
+function isValidDerivedAssetOverride(pathValue: string, expectedFolderName: string): boolean {
+  const raw = String(pathValue ?? "").trim().replace(/[\/]+$/, "");
+  if (!raw) return false;
+  const parts = raw.split(/[\/]+/).filter(Boolean);
+  if (!parts.length) return false;
+  return (parts[parts.length - 1] ?? "").toLowerCase() === expectedFolderName.toLowerCase();
+}
+
 function deriveLogosFolderFromWorkspace(workspaceRoot: string): string {
   return deriveSiblingFolderFromWorkspace(workspaceRoot, "LOGOS");
 }
@@ -465,8 +473,8 @@ export default function PromotionsEditor(props: {
   const [bannerPreviewUrl, setBannerPreviewUrl] = useState<string>("");
   const [bannerPreviewStatus, setBannerPreviewStatus] = useState<string>("");
   const bannerPreviewObjectUrlRef = useRef<string>("");
-  const effectiveLogosFolderPath = logosFolderPath || deriveLogosFolderFromWorkspace(workspaceRoot);
-  const effectiveBannersFolderPath = bannersFolderPath || deriveBannersFolderFromWorkspace(workspaceRoot);
+  const effectiveLogosFolderPath = isValidDerivedAssetOverride(logosFolderPath, "LOGOS") ? logosFolderPath : deriveLogosFolderFromWorkspace(workspaceRoot);
+  const effectiveBannersFolderPath = isValidDerivedAssetOverride(bannersFolderPath, "Banners") ? bannersFolderPath : deriveBannersFolderFromWorkspace(workspaceRoot);
 
   const canLoadFromData = !!workspaceRoot && !!promosDataPath;
   const canSave = promos.length > 0 && !!rawBytes && dirty;

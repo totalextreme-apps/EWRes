@@ -57,7 +57,7 @@ function toAsciiFixedBytes(value: unknown, length: number): Uint8Array {
   let j = 0;
   for (let i = 0; i < s.length && j < length; i++) {
     const code = s.charCodeAt(i);
-    out[j++] = code <= 0x7f ? code : 0x3f;
+    out[j++] = code & 0xff;
   }
 
   return out;

@@ -57,15 +57,9 @@ class Bin {
 
   asciiFixed(offset: number, length: number): string {
     const slice = this.bytes.slice(offset, offset + length);
-
-    let s = "";
-    for (let i = 0; i < slice.length; i++) {
-      const c = slice[i];
-      if (c === 0x00) break;
-      s += String.fromCharCode(c);
-    }
-
-    return s.replace(/\0/g, "").trim();
+    const zero = slice.indexOf(0);
+    const clean = zero >= 0 ? slice.slice(0, zero) : slice;
+    return new TextDecoder("latin1").decode(clean).replace(/\0/g, "").trim();
   }
 }
 

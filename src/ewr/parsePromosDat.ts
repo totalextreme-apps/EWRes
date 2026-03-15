@@ -58,7 +58,7 @@ function readAscii(bytes: Uint8Array, offset: number, length: number): string {
   const zero = slice.indexOf(0);
   const clean = zero >= 0 ? slice.slice(0, zero) : slice;
   // EWR files are typically space padded.
-  return new TextDecoder("ascii").decode(clean).replace(/\s+$/g, "").trim();
+  return new TextDecoder("latin1").decode(clean).replace(/\s+$/g, "").trim();
 }
 
 function readU8(bytes: Uint8Array, offset: number): number {

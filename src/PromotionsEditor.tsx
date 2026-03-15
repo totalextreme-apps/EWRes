@@ -165,12 +165,15 @@ function deriveSiblingFolderFromWorkspace(workspaceRoot: string, folderName: str
   const lowerParts = parts.map((p) => p.toLowerCase());
   const dataIndex = lowerParts.lastIndexOf("data");
   if (dataIndex >= 0) {
-    parts[dataIndex] = folderName;
-    return parts.join(sep);
+    const nextParts = [...parts];
+    nextParts[dataIndex] = folderName;
+    return nextParts.join(sep);
   }
   const last = lowerParts[lowerParts.length - 1] ?? "";
   if (/^s\d+$/i.test(last)) {
-    return parts.slice(0, -1).concat(folderName).join(sep);
+    const dataBase = [...parts.slice(0, -1), "DATA"];
+    dataBase[dataBase.length - 1] = folderName;
+    return dataBase.join(sep);
   }
   return parts.slice(0, -1).concat(folderName).join(sep);
 }

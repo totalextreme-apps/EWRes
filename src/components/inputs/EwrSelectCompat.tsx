@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 type NativeOption = {
   value: string;
@@ -21,6 +22,8 @@ type Props = {
   "aria-label"?: string;
 };
 
+type MenuRect = { top: number; left: number; width: number };
+
 function flattenOptions(children: React.ReactNode): NativeOption[] {
   const out: NativeOption[] = [];
   React.Children.forEach(children, (child) => {
@@ -37,7 +40,7 @@ function flattenOptions(children: React.ReactNode): NativeOption[] {
   return out;
 }
 
-const MENU_BG = "linear-gradient(180deg, rgba(18, 26, 47, 0.99), rgba(9, 14, 26, 0.99))";
+const MENU_BG = "linear-gradient(180deg, rgba(18, 26, 47, 0.995), rgba(9, 14, 26, 0.995))";
 const MENU_BORDER = "1px solid rgba(110, 126, 173, 0.45)";
 const MENU_TEXT = "#f5f7ff";
 const MENU_HOVER = "rgba(46, 91, 255, 0.22)";
@@ -58,15 +61,36 @@ export default function EwrSelectCompat({
   const options = useMemo(() => flattenOptions(children), [children]);
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
+  const [menuRect, setMenuRect] = useState<MenuRect | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
   const currentValue = String(value ?? "");
   const selected = options.find((opt) => opt.value === currentValue) ?? options[0];
+
+  const updateMenuPosition = () => {
+    const button = buttonRef.current;
+    if (!button) return;
+    const rect = button.getBoundingClientRect();
+    setMenuRect({
+      top: rect.bottom + 4,
+      left: rect.left,
+      width: rect.width,
+    });
+  };
+
+  useLayoutEffect(() => {
+    if (!open) return;
+    updateMenuPosition();
+  }, [open, value, children]);
 
   useEffect(() => {
     if (!open) return;
     const onDocMouseDown = (event: MouseEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+      const target = event.target as Node;
+      if (rootRef.current?.contains(target)) return;
+      if (menuRef.current?.contains(target)) return;
+      setOpen(false);
     };
     const onDocKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -74,11 +98,16 @@ export default function EwrSelectCompat({
         buttonRef.current?.focus();
       }
     };
+    const onReposition = () => updateMenuPosition();
     document.addEventListener("mousedown", onDocMouseDown);
     document.addEventListener("keydown", onDocKeyDown);
+    window.addEventListener("resize", onReposition);
+    window.addEventListener("scroll", onReposition, true);
     return () => {
       document.removeEventListener("mousedown", onDocMouseDown);
       document.removeEventListener("keydown", onDocKeyDown);
+      window.removeEventListener("resize", onReposition);
+      window.removeEventListener("scroll", onReposition, true);
     };
   }, [open]);
 
@@ -86,47 +115,31 @@ export default function EwrSelectCompat({
     onChange?.({ target: { value: nextValue, name, id } });
   };
 
-  return (
-    <div ref={rootRef} className="ewr-select" style={{ position: "relative", width: "100%", ...style }}>
-      <button
-        ref={buttonRef}
-        type="button"
-        id={id}
-        name={name}
-        title={title}
-        aria-label={ariaLabel}
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        disabled={disabled}
-        className={`${className ?? "ewr-input"} ewr-selectButton`}
-        onClick={() => {
-          if (disabled) return;
-          setOpen((prev) => !prev);
-        }}
-        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", textAlign: "left" }}
-      >
-        <span className="ewr-selectButtonLabel" style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: "1 1 auto" }}>{selected?.label ?? ""}</span>
-        <span className="ewr-selectChevron" style={{ marginLeft: 10, opacity: 0.9, flex: "0 0 auto" }}>▾</span>
-      </button>
-      {open && !disabled ? (
+  const menu = open && !disabled && menuRect
+    ? createPortal(
         <div
+          ref={menuRef}
           className="ewr-selectMenu"
           role="listbox"
           aria-labelledby={id}
           style={{
-            position: "absolute",
-            top: "calc(100% + 4px)",
-            left: 0,
-            right: 0,
-            zIndex: 10000,
+            position: "fixed",
+            top: menuRect.top,
+            left: menuRect.left,
+            width: Math.max(menuRect.width, 220),
+            zIndex: 2147483647,
             maxHeight: 280,
-            overflow: "auto",
+            overflowY: "auto",
+            overflowX: "hidden",
             borderRadius: 12,
             border: MENU_BORDER,
             background: MENU_BG,
             boxShadow: "0 12px 28px rgba(0,0,0,0.55)",
             padding: 6,
             color: MENU_TEXT,
+            fontSize: 14,
+            lineHeight: 1.2,
+            boxSizing: "border-box",
           }}
         >
           {options.map((opt) => {
@@ -161,15 +174,48 @@ export default function EwrSelectCompat({
                   background: isHovered ? MENU_HOVER : isSelected ? MENU_SELECTED : "transparent",
                   color: MENU_TEXT,
                   opacity: opt.disabled ? 0.55 : 1,
-                  font: "inherit",
+                  fontSize: 14,
+                  lineHeight: 1.2,
+                  fontWeight: 600,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
                 }}
               >
                 {opt.label}
               </button>
             );
           })}
-        </div>
-      ) : null}
-    </div>
+        </div>,
+        document.body,
+      )
+    : null;
+
+  return (
+    <>
+      <div ref={rootRef} className="ewr-select" style={{ position: "relative", width: "100%", ...style }}>
+        <button
+          ref={buttonRef}
+          type="button"
+          id={id}
+          name={name}
+          title={title}
+          aria-label={ariaLabel}
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          disabled={disabled}
+          className={`${className ?? "ewr-input"} ewr-selectButton`}
+          onClick={() => {
+            if (disabled) return;
+            setOpen((prev) => !prev);
+          }}
+          style={{ display: "flex", alignItems: "center", justifyContent: "space-between", textAlign: "left" }}
+        >
+          <span className="ewr-selectButtonLabel" style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: "1 1 auto" }}>{selected?.label ?? ""}</span>
+          <span className="ewr-selectChevron" style={{ marginLeft: 10, opacity: 0.9, flex: "0 0 auto" }}>▾</span>
+        </button>
+      </div>
+      {menu}
+    </>
   );
 }

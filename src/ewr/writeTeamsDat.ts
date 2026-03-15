@@ -13,7 +13,9 @@ function writeU16(dst: Uint8Array, offset: number, v: number) {
   dst[offset + 1] = (vv >> 8) & 0xff;
 }
 
-function writeAsciiFixed(dst: Uint8Array, offset: number, length: number, value: string) { const [dst, offset, value, length] = [arguments[0], arguments[1], arguments[2], arguments[3]] as any; writeSingleByteFixed(dst, offset, value, length); }
+function writeAsciiFixed(dst: Uint8Array, offset: number, length: number, value: string) {
+  writeSingleByteFixed(dst, offset, value, length);
+}
 
 export function writeTeamsDat(teams: Team[], originalBytes?: Uint8Array): Uint8Array {
   // If an original file was provided, validate it so we don't round-trip garbage.

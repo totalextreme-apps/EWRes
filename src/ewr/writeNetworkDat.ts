@@ -20,7 +20,9 @@ function writeI16(dst: Uint8Array, offset: number, value: number) {
   dst[offset + 1] = (encoded >> 8) & 0xff;
 }
 
-function writeAsciiFixed(dst: Uint8Array, offset: number, length: number, value: string) { const [dst, offset, value, length] = [arguments[0], arguments[1], arguments[2], arguments[3]] as any; writeSingleByteFixed(dst, offset, value, length); }
+function writeAsciiFixed(dst: Uint8Array, offset: number, length: number, value: string) {
+  writeSingleByteFixed(dst, offset, value, length);
+}
 
 export function writeNetworkDat(records: NetworkRecord[]): Uint8Array {
   const out = new Uint8Array(records.length * NETWORK_LAYOUT.recordSize);

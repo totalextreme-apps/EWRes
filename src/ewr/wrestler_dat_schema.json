@@ -2,64 +2,354 @@
   "file": "wrestler.dat",
   "recordSize": 307,
   "recordHeader": {
-    "marker": { "offset": 0, "type": "u8", "value": 52, "note": "0x34 ASCII '4'" },
-    "workerId": { "offset": 1, "type": "u16le" },
+    "marker": {
+      "offset": 0,
+      "type": "u8",
+      "value": 52,
+      "note": "0x34 ASCII '4'"
+    },
+    "workerId": {
+      "offset": 1,
+      "type": "u16le"
+    },
     "dataStartsAt": 0
   },
   "fields": [
-    { "name": "fullName", "offset": 3, "type": "ascii_fixed", "length": 25 },
-    { "name": "shortName", "offset": 28, "type": "ascii_fixed", "length": 10 },
-
-    { "name": "genderRaw", "offset": 38, "type": "u16le" },
-    { "name": "birthMonthRaw", "offset": 40, "type": "u8" },
-    { "name": "ageRaw", "offset": 42, "type": "u8" },
-    { "name": "weightRaw", "offset": 44, "type": "u8" },
-
-    { "name": "photoName", "offset": 45, "type": "ascii_fixed", "length": 20 },
-
-    { "name": "wageThousandsRaw", "offset": 80, "type": "u16le" },
-
-    { "name": "brawlingRaw", "offset": 147, "type": "u16le" },
-    { "name": "technicalRaw", "offset": 149, "type": "u16le" },
-    { "name": "speedRaw", "offset": 151, "type": "u16le" },
-    { "name": "stiffnessRaw", "offset": 153, "type": "u16le" },
-    { "name": "sellingRaw", "offset": 155, "type": "u16le" },
-    { "name": "overnessRaw", "offset": 157, "type": "u16le" },
-    { "name": "charismaRaw", "offset": 159, "type": "u16le" },
-
-    { "name": "highSpotsRaw", "offset": 161, "type": "u16le" },
-    { "name": "attitudeRaw", "offset": 163, "type": "u16le" },
-    { "name": "shootingAbilityRaw", "offset": 165, "type": "u16le" },
-
-    { "name": "speaksRaw", "offset": 187, "type": "u16le" },
-
-    { "name": "primaryFinisherName", "offset": 189, "type": "ascii_fixed", "length": 25 },
-    { "name": "pfTypeFlagA", "offset": 214, "type": "u16le" },
-    { "name": "pfTypeFlagB", "offset": 216, "type": "u16le" },
-    { "name": "pfTypeFlagC", "offset": 218, "type": "u16le" },
-
-    { "name": "secondaryFinisherName", "offset": 220, "type": "ascii_fixed", "length": 25 },
-    { "name": "sfTypeFlagA", "offset": 245, "type": "u16le" },
-    { "name": "sfTypeFlagB", "offset": 247, "type": "u16le" },
-    { "name": "sfTypeFlagC", "offset": 249, "type": "u16le" },
-
-    { "name": "behaviourRaw", "offset": 255, "type": "u16le" },
-
-    { "name": "trainerRaw", "offset": 271, "type": "u16le" },
-    { "name": "superstarLookRaw", "offset": 273, "type": "u16le" },
-
-    { "name": "nationalityRaw", "offset": 275, "type": "u8" },
-
-    { "name": "menacingRaw", "offset": 277, "type": "u16le" },
-    { "name": "fonzFactorRaw", "offset": 279, "type": "u16le" },
-    { "name": "announcerRaw", "offset": 281, "type": "u16le" },
-    { "name": "bookerRaw", "offset": 283, "type": "u16le" },
-
-    { "name": "divaRaw", "offset": 293, "type": "u16le" }
+    {
+      "name": "fullName",
+      "offset": 3,
+      "type": "ascii_fixed",
+      "length": 25
+    },
+    {
+      "name": "shortName",
+      "offset": 28,
+      "type": "ascii_fixed",
+      "length": 10
+    },
+    {
+      "name": "employer1PromoId",
+      "offset": 65,
+      "type": "u8",
+      "note": "Employer #1 promotion id. 0=None. (Confirmed via Jericho diffs)"
+    },
+    {
+      "name": "employer2PromoId",
+      "offset": 67,
+      "type": "u8",
+      "note": "Employer #2 promotion id. 0=None. (Confirmed via Jericho diffs)"
+    },
+    {
+      "name": "employer3PromoId",
+      "offset": 69,
+      "type": "u8",
+      "note": "Employer #3 promotion id. 0=None. (Confirmed via Jericho diffs)"
+    },
+    {
+      "name": "contractCode",
+      "offset": 71,
+      "type": "ascii_fixed",
+      "length": 3,
+      "note": "Contract type code: 'Non', 'Opn', 'Wri' (Confirmed via Jericho diffs)"
+    },
+    {
+      "name": "touringCode",
+      "offset": 76,
+      "type": "ascii_fixed",
+      "length": 2,
+      "note": "Touring With code (2-char). Spaces for None. (Confirmed via Tour Japan diffs)"
+    },
+    {
+      "name": "creativeControlRaw",
+      "offset": 78,
+      "type": "u16le",
+      "note": "Creative Control Clause flag. 0=off, 65535=on (Confirmed via diffs)"
+    },
+    {
+      "name": "wageThousandsRaw",
+      "offset": 80,
+      "type": "u16le"
+    },
+    {
+      "name": "employer1PositionRaw",
+      "offset": 82,
+      "type": "u8",
+      "note": "Employer #1 position enum. 0=None, 3=Midcard (Confirmed via Jericho diffs)"
+    },
+    {
+      "name": "employer2PositionRaw",
+      "offset": 84,
+      "type": "u8",
+      "note": "Employer #2 position enum. (Confirmed via Jericho diffs)"
+    },
+    {
+      "name": "employer3PositionRaw",
+      "offset": 86,
+      "type": "u8",
+      "note": "Employer #3 position enum. (Confirmed via Jericho diffs)"
+    },
+    {
+      "name": "employer1Disposition",
+      "offset": 88,
+      "type": "ascii_fixed",
+      "length": 1,
+      "note": "Employer #1 disposition code: 'F','H','T' (Confirmed via diffs)"
+    },
+    {
+      "name": "employer2Disposition",
+      "offset": 89,
+      "type": "ascii_fixed",
+      "length": 1,
+      "note": "Employer #2 disposition code: 'F','H','T' (Confirmed via diffs)"
+    },
+    {
+      "name": "employer3Disposition",
+      "offset": 90,
+      "type": "ascii_fixed",
+      "length": 1,
+      "note": "Employer #3 disposition code: 'F','H','T' (Confirmed via diffs)"
+    },
+    {
+      "name": "employer1Roster",
+      "offset": 91,
+      "type": "ascii_fixed",
+      "length": 10,
+      "note": "Employer #1 roster split token (10 chars). 'None' padded or split name (Confirmed via diffs)"
+    },
+    {
+      "name": "employer2Roster",
+      "offset": 101,
+      "type": "ascii_fixed",
+      "length": 10,
+      "note": "Employer #2 roster split token (10 chars). (Confirmed via diffs)"
+    },
+    {
+      "name": "employer3Roster",
+      "offset": 111,
+      "type": "ascii_fixed",
+      "length": 10,
+      "note": "Employer #3 roster split token (10 chars). (Confirmed via diffs)"
+    },
+    {
+      "name": "genderRaw",
+      "offset": 38,
+      "type": "u16le"
+    },
+    {
+      "name": "birthMonthRaw",
+      "offset": 40,
+      "type": "u8"
+    },
+    {
+      "name": "ageRaw",
+      "offset": 42,
+      "type": "u8"
+    },
+    {
+      "name": "weightRaw",
+      "offset": 44,
+      "type": "u8"
+    },
+    {
+      "name": "photoName",
+      "offset": 45,
+      "type": "ascii_fixed",
+      "length": 20
+    },
+    {
+      "name": "employer1ManagerId",
+      "offset": 121,
+      "type": "u16le",
+      "note": "Employer #1 manager workerId (u16). 0=None (Confirmed via diffs)"
+    },
+    {
+      "name": "employer2ManagerId",
+      "offset": 123,
+      "type": "u16le",
+      "note": "Employer #2 manager workerId (u16). 0=None (Confirmed via diffs)"
+    },
+    {
+      "name": "employer3ManagerId",
+      "offset": 125,
+      "type": "u16le",
+      "note": "Employer #3 manager workerId (u16). 0=None (Confirmed via diffs)"
+    },
+    {
+      "name": "brawlingRaw",
+      "offset": 147,
+      "type": "u16le"
+    },
+    {
+      "name": "technicalRaw",
+      "offset": 149,
+      "type": "u16le"
+    },
+    {
+      "name": "speedRaw",
+      "offset": 151,
+      "type": "u16le"
+    },
+    {
+      "name": "stiffnessRaw",
+      "offset": 153,
+      "type": "u16le"
+    },
+    {
+      "name": "sellingRaw",
+      "offset": 155,
+      "type": "u16le"
+    },
+    {
+      "name": "overnessRaw",
+      "offset": 157,
+      "type": "u16le"
+    },
+    {
+      "name": "charismaRaw",
+      "offset": 159,
+      "type": "u16le"
+    },
+    {
+      "name": "highSpotsRaw",
+      "offset": 161,
+      "type": "u16le"
+    },
+    {
+      "name": "attitudeRaw",
+      "offset": 163,
+      "type": "u16le"
+    },
+    {
+      "name": "shootingAbilityRaw",
+      "offset": 165,
+      "type": "u16le"
+    },
+    {
+      "name": "employer1GimmickId",
+      "offset": 167,
+      "type": "u8",
+      "note": "Employer #1 gimmick id. 0=None. (Confirmed via Jericho diffs)"
+    },
+    {
+      "name": "employer2GimmickId",
+      "offset": 169,
+      "type": "u8",
+      "note": "Employer #2 gimmick id. 0=None. (Confirmed via Jericho diffs)"
+    },
+    {
+      "name": "employer3GimmickId",
+      "offset": 171,
+      "type": "u8",
+      "note": "Employer #3 gimmick id. 0=None. (Confirmed via Jericho diffs)"
+    },
+    {
+      "name": "speaksRaw",
+      "offset": 187,
+      "type": "u16le"
+    },
+    {
+      "name": "primaryFinisherName",
+      "offset": 189,
+      "type": "ascii_fixed",
+      "length": 25
+    },
+    {
+      "name": "pfTypeFlagA",
+      "offset": 214,
+      "type": "u16le"
+    },
+    {
+      "name": "pfTypeFlagB",
+      "offset": 216,
+      "type": "u16le"
+    },
+    {
+      "name": "pfTypeFlagC",
+      "offset": 218,
+      "type": "u16le"
+    },
+    {
+      "name": "secondaryFinisherName",
+      "offset": 220,
+      "type": "ascii_fixed",
+      "length": 25
+    },
+    {
+      "name": "sfTypeFlagA",
+      "offset": 245,
+      "type": "u16le"
+    },
+    {
+      "name": "sfTypeFlagB",
+      "offset": 247,
+      "type": "u16le"
+    },
+    {
+      "name": "sfTypeFlagC",
+      "offset": 249,
+      "type": "u16le"
+    },
+    {
+      "name": "behaviourRaw",
+      "offset": 255,
+      "type": "u16le"
+    },
+    {
+      "name": "unsackableRaw",
+      "offset": 259,
+      "type": "u16le",
+      "note": "Unsackable flag. 0=off, 65535=on (Confirmed via diffs)"
+    },
+    {
+      "name": "trainerRaw",
+      "offset": 271,
+      "type": "u16le"
+    },
+    {
+      "name": "superstarLookRaw",
+      "offset": 273,
+      "type": "u16le"
+    },
+    {
+      "name": "nationalityRaw",
+      "offset": 275,
+      "type": "u8"
+    },
+    {
+      "name": "menacingRaw",
+      "offset": 277,
+      "type": "u16le"
+    },
+    {
+      "name": "fonzFactorRaw",
+      "offset": 279,
+      "type": "u16le"
+    },
+    {
+      "name": "announcerRaw",
+      "offset": 281,
+      "type": "u16le"
+    },
+    {
+      "name": "bookerRaw",
+      "offset": 283,
+      "type": "u16le"
+    },
+    {
+      "name": "divaRaw",
+      "offset": 293,
+      "type": "u16le"
+    }
   ],
   "mappings": {
-    "gender": { "0": "Female", "65535": "Male" },
-    "weight": { "72": "Heavyweight", "76": "Lightweight" },
+    "gender": {
+      "0": "Female",
+      "65535": "Male"
+    },
+    "weight": {
+      "72": "Heavyweight",
+      "76": "Lightweight"
+    },
     "nationality": {
       "0": "Other",
       "1": "American",

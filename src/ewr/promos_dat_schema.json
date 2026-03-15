@@ -1,0 +1,38 @@
+{
+  "recordSize": 397,
+  "maxRecords": 35,
+  "marker": { "offset": 0, "value": 52 },
+  "fields": {
+    "id": { "type": "u16", "offset": 1 },
+
+    "name": { "type": "string", "offset": 3, "length": 40 },
+    "initials": { "type": "string", "offset": 43, "length": 6 },
+    "logo": { "type": "string", "offset": 49, "length": 20 },
+    "banner": { "type": "string", "offset": 69, "length": 20 },
+
+    "size": { "type": "u8", "offset": 89 },
+    "basedIn": { "type": "u8", "offset": 91 },
+    "money": { "type": "u32", "offset": 93 },
+    "image": { "type": "u8", "offset": 103 },
+
+    "production": { "type": "u8", "offset": 107 },
+    "risk": { "type": "u8", "offset": 109 },
+    "advertising": { "type": "u8", "offset": 111 },
+    "merchandising": { "type": "u8", "offset": 113 },
+
+    "announcer1Code": { "type": "u8", "offset": 265 },
+    "announcer2WorkerId": { "type": "u16", "offset": 267 },
+
+    "rosterSplit1": { "type": "string", "offset": 271, "length": 10 },
+    "rosterSplit2": { "type": "string", "offset": 281, "length": 10 },
+    "rosterSplit3": { "type": "string", "offset": 291, "length": 10 },
+    "rosterSplit4": { "type": "string", "offset": 301, "length": 10 },
+
+    "trainingCamp": { "type": "string", "offset": 319, "length": 25 },
+    "campFacilities": { "type": "u8", "offset": 344 },
+    "headTrainerStaffId": { "type": "u16", "offset": 346 },
+
+    "devTerritory": { "type": "string", "offset": 360, "length": 35 },
+    "bookerStaffId": { "type": "u16", "offset": 395 }
+  }
+}

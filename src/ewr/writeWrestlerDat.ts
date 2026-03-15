@@ -19,6 +19,13 @@ function writeU16LE(bytes: Uint8Array, abs: number, v: number) {
   bytes[abs + 1] = (n >> 8) & 0xff;
 }
 
+function writeI16LE(bytes: Uint8Array, abs: number, v: number) {
+  const n = clampInt(v, -32768, 32767);
+  const u = n < 0 ? 0x10000 + n : n;
+  bytes[abs] = u & 0xff;
+  bytes[abs + 1] = (u >> 8) & 0xff;
+}
+
 function toAsciiFixedBytes(value: unknown, length: number): Uint8Array {
   const s = (value ?? "").toString();
 
@@ -125,6 +132,42 @@ export function writeWrestlerDat(originalBytes: Uint8Array, workers: Worker[]): 
       } else {
         throw new Error(`Unsupported field type "${(f as any).type}"`);
       }
+    }
+
+    // Save-oriented contract values.
+    if (Object.prototype.hasOwnProperty.call(w, "employer1ContractLengthMonthsRaw") || Object.prototype.hasOwnProperty.call(w, "employer1ContractLengthMonths")) {
+      const nextMonths = Object.prototype.hasOwnProperty.call(w, "employer1ContractLengthMonthsRaw")
+        ? Number((w as any).employer1ContractLengthMonthsRaw ?? 0)
+        : Number((w as any).employer1ContractLengthMonths ?? 0);
+      writeU16LE(out, recordStart + 0x4A, clampInt(nextMonths, 0, 600));
+    }
+
+    // Hidden / save-oriented wrestler state values.
+    // We allow editing in any workspace, but clamp to sane EWR-like ranges.
+    if (Object.prototype.hasOwnProperty.call(w, "conditionRaw") || Object.prototype.hasOwnProperty.call(w, "condition")) {
+      const nextCondition = Object.prototype.hasOwnProperty.call(w, "conditionRaw")
+        ? Number((w as any).conditionRaw ?? 0)
+        : Number((w as any).condition ?? 0);
+      writeI16LE(out, recordStart + 0xFB, clampInt(nextCondition, 0, 100));
+    }
+            if (Object.prototype.hasOwnProperty.call(w, "employmentStatusCode")) {
+      const statusCode = String((w as any).employmentStatusCode ?? "Nor").trim();
+      const nextStatusCode = (statusCode || "Nor").slice(0, 3);
+      out.set(toAsciiFixedBytes(nextStatusCode, 3), recordStart + 0x7F);
+    }
+if (Object.prototype.hasOwnProperty.call(w, "contractLength1")) {
+      const contractCode = String((w as any).contractCode ?? "Non").trim();
+      const maxMonths = contractCode === "Wri" ? 60 : 600;
+      writeI16LE(out, recordStart + 0x4A, clampInt(Number((w as any).contractLength1 ?? 0), 0, maxMonths));
+    }
+    if (Object.prototype.hasOwnProperty.call(w, "salary1")) {
+      writeI16LE(out, recordStart + 0x50, clampInt(Number((w as any).salary1 ?? 0), 0, 300));
+    }
+if (Object.prototype.hasOwnProperty.call(w, "shortTermMorale")) {
+      writeI16LE(out, recordStart + 0xFD, clampInt(Number((w as any).shortTermMorale ?? 0), 0, 100));
+    }
+    if (Object.prototype.hasOwnProperty.call(w, "longTermMorale")) {
+      writeI16LE(out, recordStart + 0xFF, clampInt(Number((w as any).longTermMorale ?? 0), 0, 100));
     }
   }
 

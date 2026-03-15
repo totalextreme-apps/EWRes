@@ -30,6 +30,10 @@ class Bin {
     return this.view.getUint16(offset, true);
   }
 
+  i16le(offset: number): number {
+    return this.view.getInt16(offset, true);
+  }
+
   asciiFixed(offset: number, length: number): string {
     const slice = this.bytes.slice(offset, offset + length);
 
@@ -102,6 +106,30 @@ export function parseWrestlerDat(arrayBuffer: ArrayBuffer): Worker[] {
     if (typeof w.weightRaw === "number") w.weight = w.weightRaw & 0xff;
     if (typeof w.ageRaw === "number") w.age = w.ageRaw & 0xff;
     if (typeof w.wageThousandsRaw === "number") w.wageDollars = w.wageThousandsRaw * 1000;
+
+    // Hidden / save-oriented wrestler state fields near the end of the 307-byte record.
+    // These are meaningful during save-game editing, but we expose them in all workspaces
+    // with a warning so advanced users can edit at their own risk.
+    w.conditionRaw = bin.i16le(recordStart + 0xFB);
+    w.condition = w.conditionRaw;
+    w.contractLength1 = bin.i16le(recordStart + 0x4A);
+    w.salary1 = bin.i16le(recordStart + 0x50);
+    w.shortTermMorale = bin.i16le(recordStart + 0xFD);
+    w.longTermMorale = bin.i16le(recordStart + 0xFF);
+    w.employmentStatusCode = bin.asciiFixed(recordStart + 0x7F, 3);
+    w.employmentStatusLabel = (w.employmentStatusCode === "Hom"
+      ? "Sitting Out Contract"
+      : w.employmentStatusCode === "Nor"
+        ? "Available"
+        : `Special (${w.employmentStatusCode || "---"})`);
+
+    // Save-oriented contract values verified from wrestler.dat screenshots / file evidence.
+    w.employer1ContractLengthMonthsRaw = bin.u16le(recordStart + 0x4A);
+    w.employer1ContractLengthMonths = w.employer1ContractLengthMonthsRaw;
+    if (typeof w.wageThousandsRaw === "number") {
+      w.employer1SalaryThousandsRaw = w.wageThousandsRaw;
+      w.employer1SalaryDollars = w.wageThousandsRaw * 1000;
+    }
 
     workers.push(w);
   }

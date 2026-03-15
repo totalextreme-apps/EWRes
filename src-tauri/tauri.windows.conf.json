@@ -2,8 +2,12 @@
   "app": {
     "windows": [
       {
-        "title": "EWR 4.2 WRESTLER.DAT Editor",
-        "devtools": false
+        "title": "EWR Editing Suite",
+        "width": 1600,
+        "height": 900,
+        "resizable": true,
+        "fullscreen": false,
+        "devtools": true
       }
     ]
   }

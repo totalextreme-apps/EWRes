@@ -44,6 +44,8 @@
           "path": "/Volumes/**/*"
         }
       ]
-    }
+    },
+    "opener:default",
+    "opener:allow-open-url"
   ]
 }

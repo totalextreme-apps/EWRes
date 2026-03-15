@@ -1,3 +1,4 @@
+import { encodeSingleByteFixed, writeSingleByteFixed } from "./textEncoding";
 // src/ewr/writeStaffDat.ts
 //
 // Writes staff.dat using the locked schema.

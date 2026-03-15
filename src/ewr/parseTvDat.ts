@@ -1,3 +1,4 @@
+import { decodeSingleByte } from "./textEncoding";
 import { TV_LAYOUT, validateTvDatBytes } from "./validateTvDat";
 
 export type TvTimeSlot = "E" | "P" | "L" | "G";

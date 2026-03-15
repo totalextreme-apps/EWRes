@@ -17,6 +17,7 @@ import { writeStaffDat } from "./ewr/writeStaffDat";
 
 import { parsePromosDat, type Promo } from "./ewr/parsePromosDat";
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+import { withUtf8Bom } from "./ewr/textEncoding";
 
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
@@ -1169,7 +1170,7 @@ function smallestMissingPositiveId(existing: Staff[]) {
 
       // Excel often mis-detects UTF-8 unless the CSV includes a UTF-8 BOM.
       // We intentionally export UTF-8 with BOM to preserve accented characters.
-      await writeFile(outPath, new TextEncoder().encode("\uFEFF" + lines.join("\n")));
+      await writeFile(outPath, withUtf8Bom(lines.join("\n")));
       setExternalEditingOpen(false);
       setStatus(`Exported CSV: ${outPath}`);
     } catch (e: any) {

@@ -15,6 +15,7 @@ import LeftPanelActionGrid from "./components/leftpanel/LeftPanelActionGrid";
 import { IconChecklist, IconGrid, IconImport, IconPlus } from "./components/icons/EwrIcons";
 import { EditorHeader } from "./components/rightpanel/EditorHeader";
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+import { withUtf8Bom } from "./ewr/textEncoding";
 
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
@@ -811,7 +812,7 @@ export default function TeamsEditor(props: Props) {
         lines.push(row);
       }
 
-      await writeFile(outPath, new TextEncoder().encode(lines.join("\n")));
+      await writeFile(outPath, withUtf8Bom(lines.join("\n")));
       setExternalEditingOpen(false);
       setStatus(`Exported CSV: ${outPath}`);
     } catch (e: any) {

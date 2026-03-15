@@ -1,3 +1,4 @@
+import { encodeSingleByteFixed, writeSingleByteFixed } from "./textEncoding";
 import type { EventRecord, EventMonthId, EventShowType } from "./parseEventDat";
 import { EVENT_LAYOUT } from "./validateEventDat";
 
@@ -14,11 +15,7 @@ function writeU16(dst: Uint8Array, offset: number, value: number) {
   dst[offset + 1] = (v >> 8) & 0xff;
 }
 
-function writeAsciiFixed(dst: Uint8Array, offset: number, length: number, value: string) {
-  const s = String(value ?? "").slice(0, length);
-  for (let i = 0; i < length; i++) dst[offset + i] = 0x20;
-  for (let i = 0; i < s.length; i++) dst[offset + i] = s.charCodeAt(i) & 0xff;
-}
+function writeAsciiFixed(dst: Uint8Array, offset: number, length: number, value: string) { const [dst, offset, value, length] = [arguments[0], arguments[1], arguments[2], arguments[3]] as any; writeSingleByteFixed(dst, offset, value, length); }
 
 function normalizeMonth(value: number): EventMonthId {
   if (value >= 1 && value <= 13) return value as EventMonthId;

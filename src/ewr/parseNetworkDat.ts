@@ -1,3 +1,4 @@
+import { decodeSingleByte } from "./textEncoding";
 import { NETWORK_LAYOUT, validateNetworkDatBytes } from "./validateNetworkDat";
 
 export type NetworkRecord = {

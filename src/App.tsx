@@ -52,6 +52,7 @@ import LeftPanelNameCard from "./components/leftpanel/LeftPanelNameCard";
 import LeftPanelActionGrid from "./components/leftpanel/LeftPanelActionGrid";
 import { RightPanelShell } from "./components/rightpanel/RightPanelShell";
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+import { withUtf8Bom } from "./ewr/textEncoding";
 
 // Gimmick dropdown: display by name and sort alphabetically, while keeping IDs intact.
 // If multiple gimmicks share the same name, append the ID to disambiguate.
@@ -3196,7 +3197,7 @@ async function onLoadFromData(_kind?: string) {
 
       // Excel often mis-detects UTF-8 unless the CSV includes a UTF-8 BOM.
       // We intentionally export UTF-8 with BOM to preserve accented characters.
-      await writeFile(outPath, new TextEncoder().encode("\uFEFF" + lines.join("\n")));
+      await writeFile(outPath, withUtf8Bom(lines.join("\n")));
       setStatus(`Exported CSV: ${outPath}`);
       setExternalEditingOpen(false);
     } catch (e: any) {

@@ -15,6 +15,7 @@ import { validateEventDatBytes } from "./ewr/validateEventDat";
 import { writeEventDat } from "./ewr/writeEventDat";
 import { parsePromosDat, type Promo } from "./ewr/parsePromosDat";
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+import { withUtf8Bom } from "./ewr/textEncoding";
 
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
@@ -587,7 +588,7 @@ export default function EventsEditor(props: Props) {
           csvEscape(record.eventDate ?? ""),
         ].join(","))
       );
-      const payload = new TextEncoder().encode("\ufeff" + rows.join("\r\n"));
+      const payload = withUtf8Bom(rows.join("\r\n"));
       await writeFile(target, payload);
       setStatus(`Exported CSV: ${String(target).split(/[\\/]/).pop()}`);
     } catch (e: any) {

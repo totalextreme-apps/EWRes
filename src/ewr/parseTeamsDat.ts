@@ -1,3 +1,4 @@
+import { decodeSingleByte } from "./textEncoding";
 // src/ewr/parseTeamsDat.ts
 //
 // teams.dat is a flat array of 59-byte records (no file header).

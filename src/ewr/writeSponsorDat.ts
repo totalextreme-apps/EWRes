@@ -1,3 +1,4 @@
+import { encodeSingleByteFixed, writeSingleByteFixed } from "./textEncoding";
 // src/ewr/writeSponsorDat.ts
 //
 // Writes EWR 4.2 sponsor.dat records using the locked schema.
@@ -49,18 +50,7 @@ function writeU32LE(bytes: Uint8Array, abs: number, v: number) {
 }
 
 function toAsciiFixedBytes(value: unknown, length: number): Uint8Array {
-  const s = (value ?? "").toString();
-
-  const out = new Uint8Array(length);
-  out.fill(0x20); // space padding
-
-  let j = 0;
-  for (let i = 0; i < s.length && j < length; i++) {
-    const code = s.charCodeAt(i);
-    out[j++] = code & 0xff;
-  }
-
-  return out;
+  return encodeSingleByteFixed(value, length);
 }
 
 function validateOutputMarkers(out: Uint8Array, recordSize: number, markerOffset: number, markerValue: number) {

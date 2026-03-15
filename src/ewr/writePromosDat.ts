@@ -1,3 +1,4 @@
+import { encodeSingleByteFixed } from "./textEncoding";
 // src/ewr/writePromosDat.ts
 // promos.dat (EWR 4.2) writer. Preserves unknown bytes by starting from the original record bytes.
 
@@ -34,11 +35,7 @@ function writeU32(dst: Uint8Array, offset: number, value: number) {
 }
 
 function writeAsciiFixed(dst: Uint8Array, offset: number, length: number, value: string) {
-  const s = (value ?? "").toString();
-  // EWR uses space padded ASCII.
-  const bytes = new TextEncoder().encode(s);
-  for (let i = 0; i < length; i++) dst[offset + i] = 0x20; // space
-  for (let i = 0; i < Math.min(length, bytes.length); i++) dst[offset + i] = bytes[i];
+  dst.set(encodeSingleByteFixed(value, length), offset);
 }
 
 function normalizeJpgBase(base: string): string {

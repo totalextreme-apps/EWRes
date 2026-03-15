@@ -19,6 +19,7 @@ import { parseStaffDat, type Staff } from "./ewr/parseStaffDat";
 import { parseWrestlerDat, type Worker } from "./ewr/parseWrestlerDat";
 import { toArrayBuffer } from "./ewr/toArrayBuffer";
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+import { withUtf8Bom } from "./ewr/textEncoding";
 
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
@@ -663,7 +664,7 @@ export default function TelevisionEditor(props: Props) {
         ].map(csvEscape).join(","));
       }
 
-      await writeFile(outPath, new TextEncoder().encode("\ufeff" + lines.join("\n")));
+      await writeFile(outPath, withUtf8Bom(lines.join("\n")));
       setExternalEditingOpen(false);
       setStatus(`Exported CSV: ${outPath}`);
     } catch (e: any) {

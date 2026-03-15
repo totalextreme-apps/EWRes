@@ -1,3 +1,4 @@
+import { decodeSingleByte } from "./textEncoding";
 // src/ewr/parseAlterDat.ts
 //
 // EWR 4.2 alter.dat
@@ -24,7 +25,7 @@ const FIELD_LEN = 25;
 const FIELD_COUNT = 10;
 
 function byteToChar(b: number): string {
-  return String.fromCharCode(b & 0xff);
+  return decodeSingleByte(new Uint8Array([b & 0xff]));
 }
 
 function readVisibleString25(bytes: Uint8Array, base: number, fieldIndex: number): string {

@@ -15,6 +15,7 @@ import { parseWrestlerDat, type Worker } from "./ewr/parseWrestlerDat";
 import { parsePromosDat, type PromoRecord } from "./ewr/parsePromosDat";
 import { alertWarning, confirmWarning } from "./utils/dialogs";
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+import { withUtf8Bom } from "./ewr/textEncoding";
 
 // ---------------- CSV helpers (kept local to match other editors) ----------------
 function buildEwresBackupPath(path: string, suffix = ""): string {
@@ -1193,7 +1194,7 @@ function addNewBelt() {
 
       // UTF-8 BOM for Excel accent safety
       const outText = "\uFEFF" + lines.join("\n");
-      await writeFile(outPath, new TextEncoder().encode(outText));
+      await writeFile(outPath, withUtf8Bom(outText));
       setExternalEditingOpen(false);
       setStatus(`Exported CSV: ${outPath}`);
     } catch (e: any) {

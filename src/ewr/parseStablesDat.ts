@@ -1,3 +1,4 @@
+import { decodeSingleByte } from "./textEncoding";
 import { STABLES_LAYOUT, validateStablesDatBytes } from "./validateStablesDat";
 
 export type Stable = {

@@ -1,3 +1,4 @@
+import { decodeSingleByte } from "./textEncoding";
 // src/ewr/parseSponsorDat.ts
 //
 // Parses EWR 4.2 sponsor.dat using a locked schema file.
@@ -59,7 +60,7 @@ class Bin {
     const slice = this.bytes.slice(offset, offset + length);
     const zero = slice.indexOf(0);
     const clean = zero >= 0 ? slice.slice(0, zero) : slice;
-    return new TextDecoder("latin1").decode(clean).replace(/\0/g, "").trim();
+    return decodeSingleByte(clean);
   }
 }
 

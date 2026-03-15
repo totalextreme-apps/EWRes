@@ -1,3 +1,4 @@
+import { encodeSingleByteFixed, writeSingleByteFixed } from "./textEncoding";
 // /Users/mac1/Desktop/ewr_editor/src/ewr/writeWrestlerDat.ts
 
 import schemaJson from "./wrestler_dat_schema.json";
@@ -27,18 +28,7 @@ function writeI16LE(bytes: Uint8Array, abs: number, v: number) {
 }
 
 function toAsciiFixedBytes(value: unknown, length: number): Uint8Array {
-  const s = (value ?? "").toString();
-
-  const out = new Uint8Array(length);
-  out.fill(0x20); // space padding
-
-  let j = 0;
-  for (let i = 0; i < s.length && j < length; i++) {
-    const code = s.charCodeAt(i);
-    out[j++] = code & 0xff;
-  }
-
-  return out;
+  return encodeSingleByteFixed(value, length);
 }
 
 function normalizePhotoNameForWrite(input: unknown, maxLen: number): string {

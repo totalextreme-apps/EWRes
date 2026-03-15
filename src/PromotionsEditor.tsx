@@ -28,6 +28,7 @@ import { toArrayBuffer } from "./ewr/toArrayBuffer";
 import { parseEventDat, type EventRecord } from "./ewr/parseEventDat";
 import { parseTvDat, type TelevisionRecord } from "./ewr/parseTvDat";
 import { parseNetworkDat, type NetworkRecord } from "./ewr/parseNetworkDat";
+import { withUtf8Bom } from "./ewr/textEncoding";
 
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
@@ -1850,7 +1851,7 @@ export default function PromotionsEditor(props: {
       // Excel (especially on Windows) frequently mis-detects UTF-8 unless a BOM is present.
       // Use UTF-8 with BOM so accented names (e.g., Andrés Maroñas) round-trip cleanly.
       const csvText = "\ufeff" + lines.join("\n");
-      await writeFile(dest, new TextEncoder().encode(csvText));
+      await writeFile(dest, withUtf8Bom(csvText));
       setStatus(`Exported CSV: ${safeFilename(dest)}.`);
     } catch (e: any) {
       console.error(e);

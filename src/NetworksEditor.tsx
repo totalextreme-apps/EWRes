@@ -14,6 +14,7 @@ import { parseNetworkDat, type NetworkRecord } from "./ewr/parseNetworkDat";
 import { validateNetworkDatBytes } from "./ewr/validateNetworkDat";
 import { writeNetworkDat } from "./ewr/writeNetworkDat";
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+import { withUtf8Bom } from "./ewr/textEncoding";
 
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
@@ -582,7 +583,7 @@ export default function NetworksEditor(props: Props) {
         ].map(csvEscape).join(","));
       }
 
-      await writeFile(outPath, new TextEncoder().encode("﻿" + lines.join("\n")));
+      await writeFile(outPath, withUtf8Bom(lines.join("\n")));
       setExternalEditingOpen(false);
       setStatus(`Exported CSV: ${outPath}`);
     } catch (e: any) {

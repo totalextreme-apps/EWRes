@@ -1,3 +1,4 @@
+import { encodeSingleByteFixed, writeSingleByteFixed } from "./textEncoding";
 // src/ewr/writeTeamsDat.ts
 //
 // Writes teams.dat (59-byte fixed records) from parsed Team objects.
@@ -12,12 +13,7 @@ function writeU16(dst: Uint8Array, offset: number, v: number) {
   dst[offset + 1] = (vv >> 8) & 0xff;
 }
 
-function writeAsciiFixed(dst: Uint8Array, offset: number, length: number, value: string) {
-  const s = (value ?? "").slice(0, length);
-  // space-pad
-  for (let i = 0; i < length; i++) dst[offset + i] = 0x20;
-  for (let i = 0; i < s.length; i++) dst[offset + i] = s.charCodeAt(i) & 0xff;
-}
+function writeAsciiFixed(dst: Uint8Array, offset: number, length: number, value: string) { const [dst, offset, value, length] = [arguments[0], arguments[1], arguments[2], arguments[3]] as any; writeSingleByteFixed(dst, offset, value, length); }
 
 export function writeTeamsDat(teams: Team[], originalBytes?: Uint8Array): Uint8Array {
   // If an original file was provided, validate it so we don't round-trip garbage.

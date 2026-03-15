@@ -1,3 +1,4 @@
+import { encodeSingleByteFixed, writeSingleByteFixed } from "./textEncoding";
 import type { Stable } from "./parseStablesDat";
 import { STABLES_LAYOUT } from "./validateStablesDat";
 
@@ -7,11 +8,7 @@ function writeU16(dst: Uint8Array, offset: number, v: number) {
   dst[offset + 1] = (vv >> 8) & 0xff;
 }
 
-function writeAsciiFixed(dst: Uint8Array, offset: number, length: number, value: string) {
-  const s = String(value ?? "").slice(0, length);
-  for (let i = 0; i < length; i++) dst[offset + i] = 0x20;
-  for (let i = 0; i < s.length; i++) dst[offset + i] = s.charCodeAt(i) & 0xff;
-}
+function writeAsciiFixed(dst: Uint8Array, offset: number, length: number, value: string) { const [dst, offset, value, length] = [arguments[0], arguments[1], arguments[2], arguments[3]] as any; writeSingleByteFixed(dst, offset, value, length); }
 
 export function writeStablesDat(stables: Stable[]): Uint8Array {
   const out = new Uint8Array(stables.length * STABLES_LAYOUT.recordSize);

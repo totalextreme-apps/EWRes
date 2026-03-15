@@ -1,3 +1,4 @@
+import { decodeSingleByte } from "./textEncoding";
 import { EVENT_LAYOUT, validateEventDatBytes } from "./validateEventDat";
 
 export type EventShowType = 1 | 2 | 3 | 4;

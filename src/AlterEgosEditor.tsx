@@ -16,6 +16,7 @@ import { validateAlterDatBytes } from "./ewr/validateAlterDat";
 import { writeAlterDat } from "./ewr/writeAlterDat";
 
 import { alertWarning, confirmWarning } from "./utils/dialogs";
+import { withUtf8Bom } from "./ewr/textEncoding";
 
 // ---------- CSV helpers (External Editing) ----------
 function buildEwresBackupPath(path: string, suffix = ""): string {
@@ -410,7 +411,7 @@ export default function AlterEgosEditor(props: Props) {
         lines.push(recordToCsvRow(r).map(csvEscape).join(","));
       }
 
-      await writeFile(String(outPath), new TextEncoder().encode(lines.join("\n")));
+      await writeFile(String(outPath), withUtf8Bom(lines.join("\n")));
       setExternalEditingOpen(false);
     } catch (e: any) {
       console.error(e);

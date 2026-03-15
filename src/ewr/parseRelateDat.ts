@@ -1,3 +1,4 @@
+import { decodeSingleByte } from "./textEncoding";
 export type RelationshipType =
   | "Blood Relative"
   | "Love"
@@ -74,7 +75,7 @@ function decodeName(bytes: Uint8Array): string {
   // bytes length must be 31 (prefix + 30 chars)
   const raw = bytes.slice(1, 31);
   // Latin-1 keeps bytes stable; the game uses ANSI-ish text in many dat files
-  return new TextDecoder("latin1").decode(raw).replace(/\0+$/g, "").replace(/\s+$/g, "");
+  return decodeSingleByte(raw);
 }
 
 export function parseRelateDat(u8: Uint8Array): RelateRecord[] {

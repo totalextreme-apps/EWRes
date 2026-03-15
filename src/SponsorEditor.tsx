@@ -14,6 +14,7 @@ import { parseSponsorDat, type Sponsor } from "./ewr/parseSponsorDat";
 import { writeSponsorDat } from "./ewr/writeSponsorDat";
 import { validateSponsorDatBytes } from "./ewr/validateSponsorDat";
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+import { withUtf8Bom } from "./ewr/textEncoding";
 
 // Rendered within the app's global section navigation (App.tsx provides the top header nav).
 
@@ -779,7 +780,7 @@ async function onLoadFromData() {
         lines.push(row);
       }
 
-      await writeFile(outPath, new TextEncoder().encode(lines.join("\n")));
+      await writeFile(outPath, withUtf8Bom(lines.join("\n")));
       setExternalEditingOpen(false);
       setError(null);
     } catch (e: any) {

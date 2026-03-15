@@ -1,3 +1,4 @@
+import { decodeSingleByte } from "./textEncoding";
 // /Users/mac1/Desktop/ewr_editor/src/ewr/parseWrestlerDat.ts
 
 import schemaJson from "./wrestler_dat_schema.json";
@@ -38,7 +39,7 @@ class Bin {
     const slice = this.bytes.slice(offset, offset + length);
     const zero = slice.indexOf(0);
     const clean = zero >= 0 ? slice.slice(0, zero) : slice;
-    return new TextDecoder("latin1").decode(clean).replace(/\0/g, "").trim();
+    return decodeSingleByte(clean);
   }
 }
 

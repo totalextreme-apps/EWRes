@@ -1,3 +1,4 @@
+import { decodeSingleByte } from "./textEncoding";
 // src/ewr/parsePromosDat.ts
 // promos.dat (EWR 4.2) parser for Promotions Editor.
 
@@ -58,7 +59,7 @@ function readAscii(bytes: Uint8Array, offset: number, length: number): string {
   const zero = slice.indexOf(0);
   const clean = zero >= 0 ? slice.slice(0, zero) : slice;
   // EWR files are typically space padded.
-  return new TextDecoder("latin1").decode(clean).replace(/\s+$/g, "").trim();
+  return decodeSingleByte(clean);
 }
 
 function readU8(bytes: Uint8Array, offset: number): number {

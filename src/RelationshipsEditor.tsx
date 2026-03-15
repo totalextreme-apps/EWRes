@@ -20,6 +20,7 @@ import { validateRelateDatBytes } from "./ewr/validateRelateDat";
 import { parseWrestlerDat, type Worker } from "./ewr/parseWrestlerDat";
 import { validateWrestlerDatBytes } from "./ewr/validateWrestlerDat";
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+import { withUtf8Bom } from "./ewr/textEncoding";
 
 // ----------------- small helpers -----------------
 function buildEwresBackupPath(path: string, suffix = ""): string {
@@ -1133,7 +1134,7 @@ ${err?.message ?? ""}`.trim() ||
         );
       }
 
-      await writeFile(outPath, new TextEncoder().encode(lines.join("\n")));
+      await writeFile(outPath, withUtf8Bom(lines.join("\n")));
       setExternalEditingOpen(false);
       setStatus(`Exported CSV: ${outPath}`);
     } catch (e: any) {

@@ -1,3 +1,4 @@
+import { encodeSingleByteFixed, writeSingleByteFixed } from "./textEncoding";
 // src/ewr/writeAlterDat.ts
 //
 // Writes alter.dat records back to bytes (251 bytes per record).

@@ -1,3 +1,4 @@
+import { decodeSingleByte } from "./textEncoding";
 // src/ewr/parseStaffDat.ts
 //
 // Parses EWR 4.2 staff.dat using a locked 79-byte schema.

@@ -16,6 +16,7 @@ import { RightPanelShell } from "./components/rightpanel/RightPanelShell";
 import { EditorHeader } from "./components/rightpanel/EditorHeader";
 import { IconChecklist, IconGrid, IconImport, IconPlus } from "./components/icons/EwrIcons";
 import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
+import { withUtf8Bom } from "./ewr/textEncoding";
 
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
@@ -247,7 +248,7 @@ export default function StablesEditor(props: Props) {
         lines.push(row.map(csvEscape).join(","));
       }
       const csv = "\ufeff" + lines.join("\r\n");
-      await writeFile(outPath, new TextEncoder().encode(csv));
+      await writeFile(outPath, withUtf8Bom(csv));
       setStatus(`Exported ${stables.length} stables to CSV.`);
     } catch (e: any) {
       console.error(e);

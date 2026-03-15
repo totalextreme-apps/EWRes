@@ -19,6 +19,7 @@ import { parseStaffDat, type Staff } from "./ewr/parseStaffDat";
 import { parseWrestlerDat, type Worker } from "./ewr/parseWrestlerDat";
 import { toArrayBuffer } from "./ewr/toArrayBuffer";
 
+import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
   const slash = normalized.lastIndexOf("/");
@@ -925,48 +926,48 @@ export default function TelevisionEditor(props: Props) {
         <div className="ewr-filterGrid">
           <div className="ewr-field">
             <div className="ewr-label">Day</div>
-            <select className="ewr-input" value={draftFilters.day} onChange={(e) => setDraftFilters((p) => ({ ...p, day: e.target.value }))}>
+            <EwrSelectCompat className="ewr-input" value={draftFilters.day} onChange={(e) => setDraftFilters((p) => ({ ...p, day: e.target.value }))}>
               <option value="">Any</option>
               {DAY_OPTIONS.map((day) => (
                 <option key={day} value={day}>{day}</option>
               ))}
-            </select>
+            </EwrSelectCompat>
           </div>
 
           <div className="ewr-field">
             <div className="ewr-label">Time Slot</div>
-            <select className="ewr-input" value={draftFilters.timeSlot} onChange={(e) => setDraftFilters((p) => ({ ...p, timeSlot: e.target.value }))}>
+            <EwrSelectCompat className="ewr-input" value={draftFilters.timeSlot} onChange={(e) => setDraftFilters((p) => ({ ...p, timeSlot: e.target.value }))}>
               <option value="">Any</option>
               {TIME_SLOT_OPTIONS.map((slot) => (
                 <option key={slot.value} value={slot.value}>{slot.label}</option>
               ))}
-            </select>
+            </EwrSelectCompat>
           </div>
 
           <div className="ewr-field">
             <div className="ewr-label">Promotion</div>
-            <select className="ewr-input" value={draftFilters.promotion} onChange={(e) => setDraftFilters((p) => ({ ...p, promotion: e.target.value }))}>
+            <EwrSelectCompat className="ewr-input" value={draftFilters.promotion} onChange={(e) => setDraftFilters((p) => ({ ...p, promotion: e.target.value }))}>
               <option value="">Any</option>
               {promos.map((promo) => (
                 <option key={promo.id} value={String(promo.id)}>{promo.name}</option>
               ))}
-            </select>
+            </EwrSelectCompat>
           </div>
 
           <div className="ewr-field">
             <div className="ewr-label">Announcer 1</div>
-            <select className="ewr-input" value={draftFilters.announcer1} onChange={(e) => setDraftFilters((p) => ({ ...p, announcer1: e.target.value }))}>
+            <EwrSelectCompat className="ewr-input" value={draftFilters.announcer1} onChange={(e) => setDraftFilters((p) => ({ ...p, announcer1: e.target.value }))}>
               <option value="">Any</option>
               <option value="none">None</option>
-            </select>
+            </EwrSelectCompat>
           </div>
 
           <div className="ewr-field">
             <div className="ewr-label">Announcer 2</div>
-            <select className="ewr-input" value={draftFilters.announcer2} onChange={(e) => setDraftFilters((p) => ({ ...p, announcer2: e.target.value }))}>
+            <EwrSelectCompat className="ewr-input" value={draftFilters.announcer2} onChange={(e) => setDraftFilters((p) => ({ ...p, announcer2: e.target.value }))}>
               <option value="">Any</option>
               <option value="none">None</option>
-            </select>
+            </EwrSelectCompat>
           </div>
         </div>
       </div>
@@ -1361,7 +1362,7 @@ export default function TelevisionEditor(props: Props) {
               <div className="ewr-grid" style={{ gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                 <label className="ewr-field">
                   <div className="ewr-label">Promotion</div>
-                  <select
+                  <EwrSelectCompat
                     className="ewr-input"
                     value={selectedShow.promotionId}
                     onChange={(e) => patchSelected((record) => ({
@@ -1375,12 +1376,12 @@ export default function TelevisionEditor(props: Props) {
                     {promotionOptions.map((option) => (
                       <option key={option.id} value={option.id}>{option.name}</option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </label>
 
                 <label className="ewr-field">
                   <div className="ewr-label">Day</div>
-                  <select
+                  <EwrSelectCompat
                     className="ewr-input"
                     value={selectedShow.day}
                     onChange={(e) => patchSelectedField("day", e.target.value as any)}
@@ -1388,12 +1389,12 @@ export default function TelevisionEditor(props: Props) {
                     {DAY_OPTIONS.map((day) => (
                       <option key={day} value={day}>{day}</option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </label>
 
                 <label className="ewr-field">
                   <div className="ewr-label">Network</div>
-                  <select
+                  <EwrSelectCompat
                     className="ewr-input"
                     value={selectedShow.networkId}
                     onChange={(e) => patchSelectedField("networkId", clamp(Number(e.target.value) || 0, 0, 65535) as any)}
@@ -1401,12 +1402,12 @@ export default function TelevisionEditor(props: Props) {
                     {networkOptions.map((option) => (
                       <option key={option.id} value={option.id}>{option.name}</option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </label>
 
                 <label className="ewr-field">
                   <div className="ewr-label">Time Slot</div>
-                  <select
+                  <EwrSelectCompat
                     className="ewr-input"
                     value={selectedShow.timeSlot}
                     onChange={(e) => patchSelectedField("timeSlot", e.target.value as TvTimeSlot)}
@@ -1414,7 +1415,7 @@ export default function TelevisionEditor(props: Props) {
                     {TIME_SLOT_OPTIONS.map((option) => (
                       <option key={option.value} value={option.value}>{option.label}</option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </label>
               </div>
             </div>
@@ -1463,7 +1464,7 @@ export default function TelevisionEditor(props: Props) {
             <div className="ewr-grid" style={{ gridTemplateColumns: "1fr 1fr 220px", gap: 14, marginTop: 12, alignItems: "end" }}>
               <label className="ewr-field">
                 <div className="ewr-label">Announcer 1</div>
-                <select
+                <EwrSelectCompat
                   className="ewr-input"
                   value={selectedShow.announcer1StaffId}
                   onChange={(e) => patchSelectedField("announcer1StaffId", clamp(Number(e.target.value) || 0, 0, 65535) as any)}
@@ -1472,13 +1473,13 @@ export default function TelevisionEditor(props: Props) {
                   {staffAnnouncersForSelectedPromo.map((item) => (
                     <option key={item.id} value={item.id}>{item.name}</option>
                   ))}
-                </select>
+                </EwrSelectCompat>
               </label>
 
               <label className="ewr-field">
                 <div className="ewr-label">Announcer 2</div>
                 {!selectedShow.announcer2UseWrestler ? (
-                  <select
+                  <EwrSelectCompat
                     className="ewr-input"
                     value={selectedShow.announcer2StaffId}
                     onChange={(e) => patchSelected((record) => ({
@@ -1491,9 +1492,9 @@ export default function TelevisionEditor(props: Props) {
                     {staffAnnouncersForSelectedPromo.map((item) => (
                       <option key={item.id} value={item.id}>{item.name}</option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 ) : (
-                  <select
+                  <EwrSelectCompat
                     className="ewr-input"
                     value={selectedShow.announcer2WrestlerId}
                     onChange={(e) => patchSelected((record) => ({
@@ -1506,7 +1507,7 @@ export default function TelevisionEditor(props: Props) {
                     {wrestlerAnnouncersForSelectedPromo.map((item) => (
                       <option key={item.id} value={item.id}>{String((item as any).fullName ?? "").trim() || `Worker #${item.id}`}</option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 )}
               </label>
 

@@ -20,6 +20,7 @@ import { validateRelateDatBytes } from "./ewr/validateRelateDat";
 import { parseWrestlerDat, type Worker } from "./ewr/parseWrestlerDat";
 import { validateWrestlerDatBytes } from "./ewr/validateWrestlerDat";
 
+import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 // ----------------- small helpers -----------------
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
@@ -1316,7 +1317,7 @@ ${err?.message ?? ""}`.trim() ||
       <div className="ewr-filterGrid">
         <div className="ewr-field" style={{ gridColumn: "1 / -1" }}>
           <div className="ewr-label">Relationship Type</div>
-          <select
+          <EwrSelectCompat
             className="ewr-input"
             value={draftFilters.type}
             onChange={(e) => setDraftFilters((p) => ({ ...p, type: e.target.value as any }))}
@@ -1327,7 +1328,7 @@ ${err?.message ?? ""}`.trim() ||
                 {t}
               </option>
             ))}
-          </select>
+          </EwrSelectCompat>
         </div>
       </div>
     </div>
@@ -1710,7 +1711,7 @@ ${err?.message ?? ""}`.trim() ||
 
                 <div className="ewr-field" style={{ gridColumn: "1 / -1" }}>
                   <div className="ewr-label">Relationship Type</div>
-                  <select
+                  <EwrSelectCompat
                     className="ewr-input"
                     value={selected.type}
                     onChange={(e) => updateSelected({ type: e.target.value as RelationshipType })}
@@ -1720,7 +1721,7 @@ ${err?.message ?? ""}`.trim() ||
                         {t}
                       </option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
 
                 {selected.personAId && selected.personBId ? (

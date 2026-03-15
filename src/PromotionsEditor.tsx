@@ -11,6 +11,7 @@ import { EditorHeader } from "./components/rightpanel/EditorHeader";
 
 import { IconPlus, IconChecklist, IconImport, IconGrid } from "./components/icons/EwrIcons";
 
+import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 // Tauri v2 plugins
 import { open, save } from "@tauri-apps/plugin-dialog";
 import {readFile, writeFile, exists, copyFile, readDir, mkdir} from "@tauri-apps/plugin-fs";
@@ -550,7 +551,7 @@ export default function PromotionsEditor(props: {
       <div className="ewr-filterGrid">
         <div className="ewr-field">
           <div className="ewr-label">Size</div>
-          <select
+          <EwrSelectCompat
             className="ewr-input"
             value={draftFilters.size}
             onChange={(e) => setDraftFilters((p) => ({ ...p, size: e.target.value }))}
@@ -561,12 +562,12 @@ export default function PromotionsEditor(props: {
                 {o.label}
               </option>
             ))}
-          </select>
+          </EwrSelectCompat>
         </div>
 
         <div className="ewr-field">
           <div className="ewr-label">Based In</div>
-          <select
+          <EwrSelectCompat
             className="ewr-input"
             value={draftFilters.basedIn}
             onChange={(e) => setDraftFilters((p) => ({ ...p, basedIn: e.target.value }))}
@@ -577,7 +578,7 @@ export default function PromotionsEditor(props: {
                 {o.label}
               </option>
             ))}
-          </select>
+          </EwrSelectCompat>
         </div>
 
         <div className="ewr-field" style={{ gridColumn: "1 / -1" }}>
@@ -654,7 +655,7 @@ export default function PromotionsEditor(props: {
 
         <div className="ewr-field" style={{ gridColumn: "1 / -1" }}>
           <div className="ewr-label">Camp Facilities</div>
-          <select
+          <EwrSelectCompat
             className="ewr-input"
             value={draftFilters.campFacilities}
             onChange={(e) => setDraftFilters((p) => ({ ...p, campFacilities: e.target.value }))}
@@ -665,7 +666,7 @@ export default function PromotionsEditor(props: {
                 {o.label}
               </option>
             ))}
-          </select>
+          </EwrSelectCompat>
         </div>
 
         <div className="ewr-field" style={{ gridColumn: "1 / -1" }}>
@@ -2668,7 +2669,7 @@ const blank = makeBlankPromoRecord(next);
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                         <div className="ewr-field" style={{ margin: 0 }}>
                           <div className="ewr-label">Size</div>
-                          <select
+                          <EwrSelectCompat
                             className="ewr-input"
                             value={selected.size}
                             onChange={(e) => setField("size", Number(e.target.value) as any)}
@@ -2678,12 +2679,12 @@ const blank = makeBlankPromoRecord(next);
                                 {o.label}
                               </option>
                             ))}
-                          </select>
+                          </EwrSelectCompat>
                         </div>
 
                         <div className="ewr-field" style={{ margin: 0 }}>
                           <div className="ewr-label">Based In</div>
-                          <select
+                          <EwrSelectCompat
                             className="ewr-input"
                             value={normalizeBasedIn(selected.basedIn)}
                             onChange={(e) => setField("basedIn", normalizeBasedIn(Number(e.target.value)) as any)}
@@ -2693,7 +2694,7 @@ const blank = makeBlankPromoRecord(next);
                                 {o.label}
                               </option>
                             ))}
-                          </select>
+                          </EwrSelectCompat>
                           {Number(selected.basedIn) !== normalizeBasedIn(Number(selected.basedIn)) ? (
                             <div className="ewr-muted" style={{ marginTop: 6 }}>
                               Fixed invalid value to prevent corruption.
@@ -2765,7 +2766,7 @@ const blank = makeBlankPromoRecord(next);
                   <div className="ewr-grid ewr-gridAuto" style={{ marginTop: 0 }}>
                     <div className="ewr-field">
                       <div className="ewr-label">Announcer 1</div>
-                      <select
+                      <EwrSelectCompat
                         className="ewr-input"
                         value={selected.announcer1StaffId}
                         onChange={(e) =>
@@ -2781,7 +2782,7 @@ const blank = makeBlankPromoRecord(next);
                             {s.name}
                           </option>
                         ))}
-                      </select>
+                      </EwrSelectCompat>
                     </div>
 
                     <div className="ewr-field">
@@ -2789,7 +2790,7 @@ const blank = makeBlankPromoRecord(next);
 
                       <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
                         {!selected.announcer2UseWrestler ? (
-                          <select
+                          <EwrSelectCompat
                             className="ewr-input"
                             style={{ flex: 1 }}
                             value={selected.announcer2StaffId}
@@ -2806,9 +2807,9 @@ const blank = makeBlankPromoRecord(next);
                                 {s.name}
                               </option>
                             ))}
-                          </select>
+                          </EwrSelectCompat>
                         ) : (
-                          <select
+                          <EwrSelectCompat
                             className="ewr-input"
                             style={{ flex: 1 }}
                             value={selected.announcer2WrestlerId}
@@ -2825,7 +2826,7 @@ const blank = makeBlankPromoRecord(next);
                                 {String((w as any).fullName ?? "").trim() || `Worker #${w.id}`}
                               </option>
                             ))}
-                          </select>
+                          </EwrSelectCompat>
                         )}
 
                         <label style={{ display: "flex", alignItems: "center", gap: 6, whiteSpace: "nowrap" }}>
@@ -2971,7 +2972,7 @@ const blank = makeBlankPromoRecord(next);
 
                     <div className="ewr-field" style={{ margin: 0 }}>
                       <div className="ewr-label">Booker (Staff)</div>
-                      <select
+                      <EwrSelectCompat
                         className="ewr-input"
                         value={selected.bookerStaffId}
                         disabled={!String(selected.devTerritory ?? "").trim()}
@@ -2983,7 +2984,7 @@ const blank = makeBlankPromoRecord(next);
                             {s.name}
                           </option>
                         ))}
-                      </select>
+                      </EwrSelectCompat>
                     </div>
                   </div>
 
@@ -3004,7 +3005,7 @@ const blank = makeBlankPromoRecord(next);
 
                     <div className="ewr-field" style={{ margin: 0 }}>
                       <div className="ewr-label">Camp Facilities</div>
-                      <select
+                      <EwrSelectCompat
                         className="ewr-input"
                         value={selected.campFacilities}
                         disabled={!String(selected.trainingCamp ?? "").trim()}
@@ -3015,12 +3016,12 @@ const blank = makeBlankPromoRecord(next);
                             {o.label}
                           </option>
                         ))}
-                      </select>
+                      </EwrSelectCompat>
                     </div>
 
                     <div className="ewr-field" style={{ margin: 0 }}>
                       <div className="ewr-label">Head Trainer (Staff)</div>
-                      <select
+                      <EwrSelectCompat
                         className="ewr-input"
                         value={selected.headTrainerStaffId}
                         disabled={!String(selected.trainingCamp ?? "").trim()}
@@ -3032,7 +3033,7 @@ const blank = makeBlankPromoRecord(next);
                             {s.name}
                           </option>
                         ))}
-                      </select>
+                      </EwrSelectCompat>
                     </div>
                   </div>
 

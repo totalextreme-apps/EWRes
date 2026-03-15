@@ -4,6 +4,7 @@ import {copyFile, exists, readFile, writeFile, mkdir} from "@tauri-apps/plugin-f
 
 import LeftPanelFileActions from "./components/leftpanel/LeftPanelFileActions";
 import LeftPanelSearchHeader from "./components/leftpanel/LeftPanelSearchHeader";
+import EwrSelect from "./components/inputs/EwrSelect";
 import LeftPanelNameCard from "./components/leftpanel/LeftPanelNameCard";
 import LeftPanelActionGrid from "./components/leftpanel/LeftPanelActionGrid";
 import { RightPanelShell } from "./components/rightpanel/RightPanelShell";
@@ -15,6 +16,7 @@ import { validateEventDatBytes } from "./ewr/validateEventDat";
 import { writeEventDat } from "./ewr/writeEventDat";
 import { parsePromosDat, type Promo } from "./ewr/parsePromosDat";
 
+import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
   const slash = normalized.lastIndexOf("/");
@@ -699,53 +701,41 @@ export default function EventsEditor(props: Props) {
       <div className="ewr-filterGrid">
         <div className="ewr-field">
           <div className="ewr-label">Promotion</div>
-          <select
-            className="ewr-input"
-            value={draftFilters.promotionId}
-            onChange={(e) => setDraftFilters((prev) => ({ ...prev, promotionId: e.target.value as FilterPick }))}
-          >
-            <option value="Everyone">Any</option>
-            {promos
-              .slice()
-              .sort((a, b) => String(a.name || "").localeCompare(String(b.name || ""), undefined, { sensitivity: "base" }))
-              .map((promo) => (
-                <option key={promo.id} value={String(promo.id)}>
-                  {promo.name || `(Promotion #${promo.id})`}
-                </option>
-              ))}
-          </select>
+          <EwrSelect
+            value={String(draftFilters.promotionId)}
+            onChange={(next) => setDraftFilters((prev) => ({ ...prev, promotionId: next as FilterPick }))}
+            options={[
+              { value: "Everyone", label: "Any" },
+              ...promos
+                .slice()
+                .sort((a, b) => String(a.name || "").localeCompare(String(b.name || ""), undefined, { sensitivity: "base" }))
+                .map((promo) => ({ value: String(promo.id), label: promo.name || `(Promotion #${promo.id})` })),
+            ]}
+          />
         </div>
 
         <div className="ewr-field">
           <div className="ewr-label">Type of Show</div>
-          <select
-            className="ewr-input"
-            value={draftFilters.showType}
-            onChange={(e) => setDraftFilters((prev) => ({ ...prev, showType: e.target.value as FilterPick }))}
-          >
-            <option value="Everyone">Any</option>
-            {SHOW_TYPE_OPTIONS.map((opt) => (
-              <option key={opt.value} value={String(opt.value)}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
+          <EwrSelect
+            value={String(draftFilters.showType)}
+            onChange={(next) => setDraftFilters((prev) => ({ ...prev, showType: next as FilterPick }))}
+            options={[
+              { value: "Everyone", label: "Any" },
+              ...SHOW_TYPE_OPTIONS.map((opt) => ({ value: String(opt.value), label: opt.label })),
+            ]}
+          />
         </div>
 
         <div className="ewr-field">
           <div className="ewr-label">Month</div>
-          <select
-            className="ewr-input"
-            value={draftFilters.month}
-            onChange={(e) => setDraftFilters((prev) => ({ ...prev, month: e.target.value as FilterPick }))}
-          >
-            <option value="Everyone">Any</option>
-            {MONTH_OPTIONS.map((opt) => (
-              <option key={opt.value} value={String(opt.value)}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
+          <EwrSelect
+            value={String(draftFilters.month)}
+            onChange={(next) => setDraftFilters((prev) => ({ ...prev, month: next as FilterPick }))}
+            options={[
+              { value: "Everyone", label: "Any" },
+              ...MONTH_OPTIONS.map((opt) => ({ value: String(opt.value), label: opt.label })),
+            ]}
+          />
         </div>
       </div>
     </div>
@@ -962,7 +952,7 @@ export default function EventsEditor(props: Props) {
             <div className="ewr-grid" style={{ marginTop: 12, gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 14 }}>
               <label className="ewr-field">
                 <div className="ewr-label">Promotion</div>
-                <select
+                <EwrSelectCompat
                   className="ewr-input"
                   value={selectedEvent.promotionId}
                   onChange={(e) => {
@@ -975,12 +965,12 @@ export default function EventsEditor(props: Props) {
                   }}
                 >
                   {promoOptions.map((option) => <option key={option.id} value={option.id}>{option.name}</option>)}
-                </select>
+                </EwrSelectCompat>
               </label>
 
               <label className="ewr-field">
                 <div className="ewr-label">Month</div>
-                <select
+                <EwrSelectCompat
                   className="ewr-input"
                   value={selectedEvent.month}
                   onChange={(e) => {
@@ -993,14 +983,14 @@ export default function EventsEditor(props: Props) {
                   }}
                 >
                   {MONTH_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-                </select>
+                </EwrSelectCompat>
               </label>
 
               <label className="ewr-field">
                 <div className="ewr-label">Type Of Show</div>
-                <select className="ewr-input" value={selectedEvent.showType} onChange={(e) => patchSelectedField("showType", Number(e.target.value) as EventShowType as any)}>
+                <EwrSelectCompat className="ewr-input" value={selectedEvent.showType} onChange={(e) => patchSelectedField("showType", Number(e.target.value) as EventShowType as any)}>
                   {SHOW_TYPE_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-                </select>
+                </EwrSelectCompat>
               </label>
             </div>
 

@@ -15,6 +15,7 @@ import { parseWrestlerDat, type Worker } from "./ewr/parseWrestlerDat";
 import { parsePromosDat, type PromoRecord } from "./ewr/parsePromosDat";
 import { alertWarning, confirmWarning } from "./utils/dialogs";
 
+import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 // ---------------- CSV helpers (kept local to match other editors) ----------------
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
@@ -321,7 +322,7 @@ const renderFilterPanel = (onClose: () => void) => (
     <div className="ewr-filterGrid">
       <div className="ewr-field">
         <div className="ewr-label">Belt Owner</div>
-        <select
+        <EwrSelectCompat
           className="ewr-input"
           value={draftFilters.ownerId}
           onChange={(e) => setDraftFilters((p) => ({ ...p, ownerId: e.target.value }))}
@@ -335,7 +336,7 @@ const renderFilterPanel = (onClose: () => void) => (
                 {p.name}
               </option>
             ))}
-        </select>
+        </EwrSelectCompat>
       </div>
 
       <div className="ewr-field">
@@ -1705,7 +1706,7 @@ function addNewBelt() {
 
                 <div className="ewr-field" style={{ gridColumn: "1 / -1" }}>
                   <div className="ewr-label">Belt Owner</div>
-                  <select
+                  <EwrSelectCompat
                     className="ewr-input"
                     value={selected.ownerPromoId}
                     disabled={promosById.size === 0}
@@ -1719,7 +1720,7 @@ function addNewBelt() {
                           {name}
                         </option>
                       ))}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
 
                 <div className="ewr-field" style={{ gridColumn: "1 / -1" }}>
@@ -1741,7 +1742,7 @@ function addNewBelt() {
 
                 <div className="ewr-field">
                   <div className="ewr-label">Holder</div>
-                      <select
+                      <EwrSelectCompat
                     className="ewr-input"
                     value={String(selected.holder1Id ?? 0)}
                     onChange={(e) => {
@@ -1756,13 +1757,13 @@ function addNewBelt() {
                         {w.fullName || w.shortName || `ID ${w.id}`}
                       </option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
 
                 {selected.isSinglesTitle ? null : (
                   <div className="ewr-field">
                     <div className="ewr-label">Partner</div>
-                      <select
+                      <EwrSelectCompat
                       className="ewr-input"
                       value={String(selected.holder2Id ?? 0)}
                       onChange={(e) => {
@@ -1777,7 +1778,7 @@ function addNewBelt() {
                           {w.fullName || w.shortName || `ID ${w.id}`}
                         </option>
                       ))}
-                    </select>
+                    </EwrSelectCompat>
                     {selected.holder1Id && selected.holder2Id && selected.holder1Id === selected.holder2Id ? (
                       <div className="ewr-muted" style={{ marginTop: 8 }}>
                         Holder and Partner cannot be the same wrestler.

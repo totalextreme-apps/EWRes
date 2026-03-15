@@ -16,6 +16,7 @@ import { RightPanelShell } from "./components/rightpanel/RightPanelShell";
 import { EditorHeader } from "./components/rightpanel/EditorHeader";
 import { IconChecklist, IconGrid, IconImport, IconPlus } from "./components/icons/EwrIcons";
 
+import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
   const slash = normalized.lastIndexOf("/");
@@ -600,7 +601,7 @@ export default function StablesEditor(props: Props) {
           <div className="ewr-filterTileGrid" style={{ gridTemplateColumns: "1fr" }}>
             <label className="ewr-filterTile ewr-filterTileStack">
               <span className="ewr-filterTileLabel">Promotion</span>
-              <select
+              <EwrSelectCompat
                 className="ewr-input ewr-filterTileSelect"
                 value={filterPromotionId}
                 onChange={(e) => setFilterPromotionId(e.target.value)}
@@ -609,7 +610,7 @@ export default function StablesEditor(props: Props) {
                 {promosAlpha.map((p) => (
                   <option key={p.id} value={String(p.id)}>{p.name}</option>
                 ))}
-              </select>
+              </EwrSelectCompat>
             </label>
           </div>
         </div>
@@ -849,7 +850,7 @@ export default function StablesEditor(props: Props) {
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 16, alignItems: "start" }}>
                   <label className="ewr-field">
                     <div className="ewr-label">Promotion</div>
-                    <select
+                    <EwrSelectCompat
                       className="ewr-input"
                       value={selectedStable.promotionId || Number(promosAlpha[0]?.id ?? 0)}
                       onChange={(e) => {
@@ -869,17 +870,17 @@ export default function StablesEditor(props: Props) {
                       {promosAlpha.map((p) => (
                         <option key={p.id} value={p.id}>{p.name}</option>
                       ))}
-                    </select>
+                    </EwrSelectCompat>
                   </label>
 
                   <label className="ewr-field">
                     <div className="ewr-label">Leader</div>
-                    <select className="ewr-input" value={selectedStable.leaderId} onChange={(e) => setLeader(Number(e.target.value) | 0)}>
+                    <EwrSelectCompat className="ewr-input" value={selectedStable.leaderId} onChange={(e) => setLeader(Number(e.target.value) | 0)}>
                       <option value={0}>None</option>
                       {leaderWorkersAlpha.map((w) => (
                         <option key={w.id} value={w.id}>{w.fullName}</option>
                       ))}
-                    </select>
+                    </EwrSelectCompat>
                   </label>
                 </div>
               </div>
@@ -925,12 +926,12 @@ export default function StablesEditor(props: Props) {
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 16, alignItems: "start" }}>
                   <div className="ewr-field">
                     <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: 12, alignItems: "end" }}>
-                      <select className="ewr-input" value={memberToAddId} onChange={(e) => setMemberToAddId(Number(e.target.value) | 0)}>
+                      <EwrSelectCompat className="ewr-input" value={memberToAddId} onChange={(e) => setMemberToAddId(Number(e.target.value) | 0)}>
                         <option value={0}>Select worker to add</option>
                         {addablePromoWorkersAlpha.map((w) => (
                           <option key={w.id} value={w.id}>{w.fullName}</option>
                         ))}
-                      </select>
+                      </EwrSelectCompat>
                       <button type="button" className="ewr-button ewr-buttonGreen" onClick={() => addMember(memberToAddId)} disabled={!memberToAddId}>
                         Add Member
                       </button>
@@ -939,12 +940,12 @@ export default function StablesEditor(props: Props) {
 
                   <div className="ewr-field">
                     <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: 12, alignItems: "end" }}>
-                      <select className="ewr-input" value={memberToRemoveId} onChange={(e) => setMemberToRemoveId(Number(e.target.value) | 0)}>
+                      <EwrSelectCompat className="ewr-input" value={memberToRemoveId} onChange={(e) => setMemberToRemoveId(Number(e.target.value) | 0)}>
                         <option value={0}>Select member to remove</option>
                         {removablePromoWorkersAlpha.map((w) => (
                           <option key={w.id} value={w.id}>{w.fullName}</option>
                         ))}
-                      </select>
+                      </EwrSelectCompat>
                       <button type="button" className="ewr-button ewr-buttonRed" onClick={() => removeMember(memberToRemoveId)} disabled={!memberToRemoveId}>
                         Remove Member
                       </button>

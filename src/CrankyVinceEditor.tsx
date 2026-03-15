@@ -12,6 +12,7 @@ import { GIMMICKS } from "./ewr/gimmicks";
 import { toArrayBuffer } from "./ewr/toArrayBuffer";
 import crankyVinceLogo from "./assets/cranky_vince_logo.png";
 
+import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 type Props = { workspaceRoot?: string; onClose?: () => void };
 
 type SessionEntry = {
@@ -2426,9 +2427,9 @@ export default function CrankyVinceEditor({ workspaceRoot }: Props) {
             </div>
             <div className="ewr-groupCard" style={{ padding: 12, display: "grid", gap: 10 }}>
               <div className="ewr-sectionTitle" style={{ margin: 0 }}>Promotion Context</div>
-              <select className="ewr-input" value={state?.selectedPromotionId ?? 0} onChange={(e) => rebuildDeckForPromotion(Number(e.target.value) || 0)} disabled={!universe?.promotions.length}>
+              <EwrSelectCompat className="ewr-input" value={state?.selectedPromotionId ?? 0} onChange={(e) => rebuildDeckForPromotion(Number(e.target.value) || 0)} disabled={!universe?.promotions.length}>
                 {([...((universe?.promotions ?? []))].sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" })).map((promo) => <option key={promo.id} value={promo.id}>{promo.name}</option>))}
-              </select>
+              </EwrSelectCompat>
               <div className="ewr-muted" style={{ fontSize: 12 }}>
                 Locked Deck: {state?.seriousCount ?? 0} serious cards + {state?.fillerCount ?? 0} filler chaos cards.
               </div>
@@ -2718,10 +2719,10 @@ export default function CrankyVinceEditor({ workspaceRoot }: Props) {
                   <div className="ewr-label" style={{ fontSize: 16, fontWeight: 900 }}>Current Custom Rules</div>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                     <div className="ewr-muted" style={{ fontSize: 12 }}>Filter</div>
-                    <select className="ewr-input" style={{ minWidth: 180 }} value={selectedCollectionFilter} onChange={(e) => setSelectedCollectionFilter(e.target.value)}>
+                    <EwrSelectCompat className="ewr-input" style={{ minWidth: 180 }} value={selectedCollectionFilter} onChange={(e) => setSelectedCollectionFilter(e.target.value)}>
                       <option value="all">All Collections</option>
                       {collectionOptions().map((name) => <option key={name} value={name}>{name}</option>)}
-                    </select>
+                    </EwrSelectCompat>
                   </div>
                 </div>
                 <div className="ewr-muted" style={{ fontSize: 12, lineHeight: 1.5 }}>
@@ -2802,10 +2803,10 @@ export default function CrankyVinceEditor({ workspaceRoot }: Props) {
                   </div>
                   <div className="ewr-field">
                     <div className="ewr-label">Rule Type</div>
-                    <select className="ewr-input" value={currentEditorRule().kind || "serious"} onChange={(e) => updateEditorRuleField("kind", e.target.value === "filler" ? "filler" : "serious")}>
+                    <EwrSelectCompat className="ewr-input" value={currentEditorRule().kind || "serious"} onChange={(e) => updateEditorRuleField("kind", e.target.value === "filler" ? "filler" : "serious")}>
                       <option value="serious">Serious</option>
                       <option value="filler">Filler / Gimmick</option>
-                    </select>
+                    </EwrSelectCompat>
                   </div>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>

@@ -15,6 +15,7 @@ import LeftPanelActionGrid from "./components/leftpanel/LeftPanelActionGrid";
 import { IconChecklist, IconGrid, IconImport, IconPlus } from "./components/icons/EwrIcons";
 import { EditorHeader } from "./components/rightpanel/EditorHeader";
 
+import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
   const slash = normalized.lastIndexOf("/");
@@ -626,11 +627,11 @@ export default function TeamsEditor(props: Props) {
           <div className="ewr-filterTileGrid" style={{ gridTemplateColumns: "1fr" }}>
             <label className="ewr-filterTile ewr-filterTileStack">
               <span className="ewr-filterTileLabel">Active status</span>
-              <select className="ewr-input ewr-filterTileSelect" value={filterActive} onChange={(e) => setFilterActive(e.target.value as any)}>
+              <EwrSelectCompat className="ewr-input ewr-filterTileSelect" value={filterActive} onChange={(e) => setFilterActive(e.target.value as any)}>
                 <option value="">Any</option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
-              </select>
+              </EwrSelectCompat>
             </label>
           </div>
         </div>

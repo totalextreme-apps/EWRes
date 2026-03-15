@@ -12,6 +12,7 @@ import { GIMMICKS } from "./ewr/gimmicks";
 import { GIMMICK_REQUIREMENT_RULES, type GimmickRequirementRule } from "./ewr/gimmickRequirements";
 import { parsePromosDat, type Promo, type PromoRecord } from "./ewr/parsePromosDat";
 
+import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 // Tauri v2 plugins
 import { open, save } from "@tauri-apps/plugin-dialog";
 import { readFile, writeFile, exists, copyFile, mkdir } from "@tauri-apps/plugin-fs";
@@ -4748,7 +4749,7 @@ closeCsvModal();
               <div className="ewr-filterGrid">
                 <div className="ewr-field">
                   <div className="ewr-label" style={{ display: "flex", alignItems: "center" }}>Nationality{renderFieldHelp("Nationality")}</div>
-                  <select
+                  <EwrSelectCompat
                     className="ewr-input"
                     value={filterNationality}
                     onChange={(e) => setFilterNationality(e.target.value === "" ? "" : Number(e.target.value))}
@@ -4759,12 +4760,12 @@ closeCsvModal();
                         {o.label}
                       </option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
 
                 <div className="ewr-field">
                   <div className="ewr-label">Gender</div>
-                  <select
+                  <EwrSelectCompat
                     className="ewr-input"
                     value={filterGender}
                     onChange={(e) => {
@@ -4776,12 +4777,12 @@ closeCsvModal();
                     <option value="">Any</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
-                  </select>
+                  </EwrSelectCompat>
                 </div>
 
                 <div className="ewr-field">
                   <div className="ewr-label">Birth month</div>
-                  <select
+                  <EwrSelectCompat
                     className="ewr-input"
                     value={filterBirthMonth}
                     onChange={(e) => setFilterBirthMonth(e.target.value === "" ? "" : Number(e.target.value))}
@@ -4792,28 +4793,28 @@ closeCsvModal();
                         {o.label}
                       </option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
 
                 <div className="ewr-field">
                   <div className="ewr-label">Weight class</div>
-                  <select className="ewr-input" value={filterWeight} onChange={(e) => setFilterWeight(e.target.value === "" ? "" : Number(e.target.value))}>
+                  <EwrSelectCompat className="ewr-input" value={filterWeight} onChange={(e) => setFilterWeight(e.target.value === "" ? "" : Number(e.target.value))}>
                     <option value="">Any</option>
                     {weightOptions.map((o) => (
                       <option key={o.value} value={o.value}>
                         {o.label}
                       </option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
 
                 <div className="ewr-field">
                   <div className="ewr-label">Speaks</div>
-                  <select className="ewr-input" value={filterSpeaks} onChange={(e) => setFilterSpeaks(e.target.value as any)}>
+                  <EwrSelectCompat className="ewr-input" value={filterSpeaks} onChange={(e) => setFilterSpeaks(e.target.value as any)}>
                     <option value="">Any</option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
-                  </select>
+                  </EwrSelectCompat>
                 </div>
 
                 <div className="ewr-field">
@@ -4835,7 +4836,7 @@ closeCsvModal();
 
                 <div className="ewr-field">
                   <div className="ewr-label">Works For</div>
-                  <select
+                  <EwrSelectCompat
                     className="ewr-input"
                     value={filterWorksFor}
                     onChange={(e) => {
@@ -4851,22 +4852,22 @@ closeCsvModal();
                         {p.name}
                       </option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
 
                 <div className="ewr-field">
                   <div className="ewr-label">Contract Type</div>
-                  <select className="ewr-input" value={filterContractType} onChange={(e) => setFilterContractType(e.target.value as any)}>
+                  <EwrSelectCompat className="ewr-input" value={filterContractType} onChange={(e) => setFilterContractType(e.target.value as any)}>
                     <option value="any">Any</option>
                     <option value="Wri">Written</option>
                     <option value="Opn">Open</option>
                     <option value="Non">None</option>
-                  </select>
+                  </EwrSelectCompat>
                 </div>
 
                 <div className="ewr-field">
                   <div className="ewr-label">Touring With</div>
-                  <select className="ewr-input" value={filterTouringWith} onChange={(e) => setFilterTouringWith(e.target.value as any)}>
+                  <EwrSelectCompat className="ewr-input" value={filterTouringWith} onChange={(e) => setFilterTouringWith(e.target.value as any)}>
                     <option value="any">Any</option>
                     <option value="jp_any">Any (Japan touring)</option>
                     <option value="none">None</option>
@@ -4875,12 +4876,12 @@ closeCsvModal();
                         {t.label}
                       </option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
 
                                 <div className="ewr-field">
                   <div className="ewr-label">Works For</div>
-                  <select
+                  <EwrSelectCompat
                     className="ewr-input"
                     value={
                       filterWorksFor === "any"
@@ -4903,22 +4904,22 @@ closeCsvModal();
                         {p.name}
                       </option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
 
                 <div className="ewr-field">
                   <div className="ewr-label">Contract Type</div>
-                  <select className="ewr-input" value={filterContractType} onChange={(e) => setFilterContractType(e.target.value as any)}>
+                  <EwrSelectCompat className="ewr-input" value={filterContractType} onChange={(e) => setFilterContractType(e.target.value as any)}>
                     <option value="any">Any</option>
                     <option value="Wri">Written</option>
                     <option value="Opn">Open</option>
                     <option value="Non">None</option>
-                  </select>
+                  </EwrSelectCompat>
                 </div>
 
                 <div className="ewr-field">
                   <div className="ewr-label">Touring With</div>
-                  <select className="ewr-input" value={filterTouringWith} onChange={(e) => setFilterTouringWith(e.target.value)}>
+                  <EwrSelectCompat className="ewr-input" value={filterTouringWith} onChange={(e) => setFilterTouringWith(e.target.value)}>
                     <option value="any">Any</option>
                     <option value="jp_any">Any (Japan touring)</option>
                     <option value="none">None</option>
@@ -4927,31 +4928,31 @@ closeCsvModal();
                         {t.label}
                       </option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
 
 <div className="ewr-field">
                   <div className="ewr-label">Primary finisher type</div>
-                  <select className="ewr-input" value={filterPrimaryFinisherType} onChange={(e) => setFilterPrimaryFinisherType(e.target.value)}>
+                  <EwrSelectCompat className="ewr-input" value={filterPrimaryFinisherType} onChange={(e) => setFilterPrimaryFinisherType(e.target.value)}>
                     <option value="">Any</option>
                     {finisherTypeOptions.map((t) => (
                       <option key={t} value={t}>
                         {t}
                       </option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
 
                 <div className="ewr-field">
                   <div className="ewr-label">Secondary finisher type</div>
-                  <select className="ewr-input" value={filterSecondaryFinisherType} onChange={(e) => setFilterSecondaryFinisherType(e.target.value)}>
+                  <EwrSelectCompat className="ewr-input" value={filterSecondaryFinisherType} onChange={(e) => setFilterSecondaryFinisherType(e.target.value)}>
                     <option value="">Any</option>
                     {finisherTypeOptions.map((t) => (
                       <option key={t} value={t}>
                         {t}
                       </option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
               </div>
 
@@ -4960,13 +4961,13 @@ closeCsvModal();
 
                 {skillRangeFilters.map((f) => (
                   <div key={f.id} className="ewr-filterSkillRow">
-                    <select className="ewr-input" style={{ width: 150 }} value={f.key} onChange={(e) => updateSkillRangeFilter(f.id, { key: e.target.value as any })}>
+                    <EwrSelectCompat className="ewr-input" style={{ width: 150 }} value={f.key} onChange={(e) => updateSkillRangeFilter(f.id, { key: e.target.value as any })}>
                       {SKILL_FILTER_META.map((s) => (
                         <option key={s.key} value={s.key}>
                           {s.label}
                         </option>
                       ))}
-                    </select>
+                    </EwrSelectCompat>
 
                     <input className="ewr-input" type="number" inputMode="numeric" min={0} max={100} placeholder="Min" value={f.min} onChange={(e) => updateSkillRangeFilter(f.id, { min: e.target.value })} style={{ width: 78 }} />
                     <input className="ewr-input" type="number" inputMode="numeric" min={0} max={100} placeholder="Max" value={f.max} onChange={(e) => updateSkillRangeFilter(f.id, { max: e.target.value })} style={{ width: 78 }} />
@@ -5004,7 +5005,7 @@ closeCsvModal();
                           {f.label}
                           {f.divaOnly ? <span className="ewr-filterTiny"> (female only)</span> : null}
                         </span>
-                        <select
+                        <EwrSelectCompat
                           className="ewr-input ewr-filterTileSelect"
                           value={flagFilters[f.key] ?? ""}
                           onChange={(e) => setFlagFilters((prev) => ({ ...prev, [f.key]: e.target.value as any }))}
@@ -5013,7 +5014,7 @@ closeCsvModal();
                           <option value="">Any</option>
                           <option value="yes">Yes</option>
                           <option value="no">No</option>
-                        </select>
+                        </EwrSelectCompat>
                       </label>
                     );
                   })}
@@ -5431,17 +5432,17 @@ closeCsvModal();
 
               <div className="ewr-field">
                 <div className="ewr-label">Mass Edit Option</div>
-                <select className="ewr-input" value={massEditAction} onChange={(e) => { setMassEditAction(e.target.value as MassEditAction); setMassEditValue(""); setMassEditAuxValue("brawling"); }}>
+                <EwrSelectCompat className="ewr-input" value={massEditAction} onChange={(e) => { setMassEditAction(e.target.value as MassEditAction); setMassEditValue(""); setMassEditAuxValue("brawling"); }}>
                   {MASS_EDIT_ACTION_OPTIONS.map((opt) => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
-                </select>
+                </EwrSelectCompat>
               </div>
 
               {massEditAction === "set_birth_month" ? (
                 <div className="ewr-field">
                   <div className="ewr-label">Birth Month</div>
-                  <select className="ewr-input" value={massEditValue || "0"} onChange={(e) => setMassEditValue(e.target.value)}>
+                  <EwrSelectCompat className="ewr-input" value={massEditValue || "0"} onChange={(e) => setMassEditValue(e.target.value)}>
                     {birthMonthOptions.filter((opt) => Number(opt.value) >= 0 && Number(opt.value) <= 12).map((opt) => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
               ) : null}
 
@@ -5450,9 +5451,9 @@ closeCsvModal();
                   {["set_skill", "increase_skill", "decrease_skill"].includes(massEditAction) ? (
                     <div className="ewr-field">
                       <div className="ewr-label">Skill</div>
-                      <select className="ewr-input" value={massEditAuxValue} onChange={(e) => setMassEditAuxValue(e.target.value)}>
+                      <EwrSelectCompat className="ewr-input" value={massEditAuxValue} onChange={(e) => setMassEditAuxValue(e.target.value)}>
                         {SKILL_FILTER_META.map((meta) => <option key={meta.key} value={meta.key}>{meta.label}</option>)}
-                      </select>
+                      </EwrSelectCompat>
                     </div>
                   ) : null}
                   <div className="ewr-field">
@@ -5465,38 +5466,38 @@ closeCsvModal();
               {massEditAction === "set_gender" ? (
                 <div className="ewr-field">
                   <div className="ewr-label">Gender</div>
-                  <select className="ewr-input" value={massEditValue || "male"} onChange={(e) => setMassEditValue(e.target.value)}>
+                  <EwrSelectCompat className="ewr-input" value={massEditValue || "male"} onChange={(e) => setMassEditValue(e.target.value)}>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
-                  </select>
+                  </EwrSelectCompat>
                 </div>
               ) : null}
 
               {massEditAction === "set_weight" ? (
                 <div className="ewr-field">
                   <div className="ewr-label">Weight</div>
-                  <select className="ewr-input" value={massEditValue || "72"} onChange={(e) => setMassEditValue(e.target.value)}>
+                  <EwrSelectCompat className="ewr-input" value={massEditValue || "72"} onChange={(e) => setMassEditValue(e.target.value)}>
                     {weightOptions.map((opt) => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
               ) : null}
 
               {massEditAction === "set_nationality" ? (
                 <div className="ewr-field">
                   <div className="ewr-label" style={{ display: "flex", alignItems: "center" }}>Nationality{renderFieldHelp("Nationality")}</div>
-                  <select className="ewr-input" value={massEditValue || String(nationalityOptions[0]?.value ?? 0)} onChange={(e) => setMassEditValue(e.target.value)}>
+                  <EwrSelectCompat className="ewr-input" value={massEditValue || String(nationalityOptions[0]?.value ?? 0)} onChange={(e) => setMassEditValue(e.target.value)}>
                     {nationalityOptions.map((opt) => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
               ) : null}
 
               {massEditAction === "set_speaks" ? (
                 <div className="ewr-field">
                   <div className="ewr-label">Speaks</div>
-                  <select className="ewr-input" value={massEditValue || "yes"} onChange={(e) => setMassEditValue(e.target.value)}>
+                  <EwrSelectCompat className="ewr-input" value={massEditValue || "yes"} onChange={(e) => setMassEditValue(e.target.value)}>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
-                  </select>
+                  </EwrSelectCompat>
                 </div>
               ) : null}
 
@@ -5504,16 +5505,16 @@ closeCsvModal();
                 <div className="ewr-grid ewr-grid2">
                   <div className="ewr-field">
                     <div className="ewr-label">Flag</div>
-                    <select className="ewr-input" value={massEditAuxValue} onChange={(e) => setMassEditAuxValue(e.target.value)}>
+                    <EwrSelectCompat className="ewr-input" value={massEditAuxValue} onChange={(e) => setMassEditAuxValue(e.target.value)}>
                       {FLAG_FILTER_META.map((meta) => <option key={meta.key} value={meta.key}>{meta.label}</option>)}
-                    </select>
+                    </EwrSelectCompat>
                   </div>
                   <div className="ewr-field">
                     <div className="ewr-label">Value</div>
-                    <select className="ewr-input" value={massEditValue || "yes"} onChange={(e) => setMassEditValue(e.target.value)}>
+                    <EwrSelectCompat className="ewr-input" value={massEditValue || "yes"} onChange={(e) => setMassEditValue(e.target.value)}>
                       <option value="yes">Yes</option>
                       <option value="no">No</option>
-                    </select>
+                    </EwrSelectCompat>
                   </div>
                 </div>
               ) : null}
@@ -6049,7 +6050,7 @@ closeCsvModal();
 
                     <div className="ewr-field">
                       <div className="ewr-label">Gender</div>
-                      <select
+                      <EwrSelectCompat
                         className="ewr-input"
                         value={isMale ? "Male" : "Female"}
                         onChange={(e) => {
@@ -6061,12 +6062,12 @@ closeCsvModal();
                       >
                         <option value="Female">Female</option>
                         <option value="Male">Male</option>
-                      </select>
+                      </EwrSelectCompat>
                     </div>
 
                     <div className="ewr-field">
                       <div className="ewr-label">Birth Month</div>
-                      <select
+                      <EwrSelectCompat
                         className="ewr-input"
                         value={getNum(selectedWorker as any, "birthMonthRaw", "birthMonth") & 0xff}
                         onChange={(e) => {
@@ -6087,7 +6088,7 @@ closeCsvModal();
                             {opt.label}
                           </option>
                         ))}
-                      </select>
+                      </EwrSelectCompat>
                     </div>
 
                     <div className="ewr-field">
@@ -6104,7 +6105,7 @@ closeCsvModal();
 
                     <div className="ewr-field">
                       <div className="ewr-label">Weight</div>
-                      <select
+                      <EwrSelectCompat
                         className="ewr-input"
                         value={getNum(selectedWorker as any, "weightRaw", "weight") & 0xff}
                         onChange={(e) => {
@@ -6120,12 +6121,12 @@ closeCsvModal();
                             {opt.label}
                           </option>
                         ))}
-                      </select>
+                      </EwrSelectCompat>
                     </div>
 
                     <div className="ewr-field">
                       <div className="ewr-label">Nationality</div>
-                      <select
+                      <EwrSelectCompat
                         className="ewr-input"
                         value={getNum(selectedWorker as any, "nationalityRaw", "nationality") & 0xff}
                         onChange={(e) =>
@@ -6144,7 +6145,7 @@ closeCsvModal();
                             {opt.label}
                           </option>
                         ))}
-                      </select>
+                      </EwrSelectCompat>
                     </div>
 
                     <div className="ewr-field" style={{ display: "flex", alignItems: "center", gap: 10, paddingTop: 22 }}>
@@ -6257,7 +6258,7 @@ closeCsvModal();
                             <div className="ewr-muted" style={{ fontWeight: 900, minWidth: 70 }}>
                               Quick Set
                             </div>
-                            <select
+                            <EwrSelectCompat
                               className="ewr-input"
                               value={overnessQuickSet}
                               onChange={(e) => {
@@ -6280,7 +6281,7 @@ closeCsvModal();
                                   {o.label}
                                 </option>
                               ))}
-                            </select>
+                            </EwrSelectCompat>
                           </div>
                         ) : null}
                       </div>
@@ -6616,7 +6617,7 @@ closeCsvModal();
                   <div className="ewr-grid ewr-gridAuto">
                     <div className="ewr-field">
                       <div className="ewr-label">Contract Type</div>
-                      <select
+                      <EwrSelectCompat
                         className="ewr-input"
                         value={getStr(selectedWorker as any, "contractCode") || "Non"}
                         onChange={(e) => {
@@ -6663,7 +6664,7 @@ closeCsvModal();
                             {o.label}
                           </option>
                         ))}
-                      </select>
+                      </EwrSelectCompat>
                       <div className="ewr-hint">
                         Touring in Japan requires Contract Type <b>None</b> or <b>Open</b>. Written forces Touring to None.
                       </div>
@@ -6671,7 +6672,7 @@ closeCsvModal();
 
                     <div className="ewr-field">
                       <div className="ewr-label">Touring With</div>
-                      <select
+                      <EwrSelectCompat
                         className="ewr-input"
                         value={getStr(selectedWorker as any, "touringCode")}
                         onChange={(e) => {
@@ -6693,7 +6694,7 @@ closeCsvModal();
                             {o.label}
                           </option>
                         ))}
-                      </select>
+                      </EwrSelectCompat>
                       <div className="ewr-hint">
                         Note: Some touring options may not persist in the native editor unless the worker meets hidden stat requirements.
                       </div>
@@ -6769,7 +6770,7 @@ closeCsvModal();
 
                       if (splits.length) {
                         return (
-                          <select
+                          <EwrSelectCompat
                             className="ewr-input"
                             disabled={disabled}
                             value={current}
@@ -6784,7 +6785,7 @@ closeCsvModal();
                                 {s}
                               </option>
                             ))}
-                          </select>
+                          </EwrSelectCompat>
                         );
                       }
 
@@ -6811,7 +6812,7 @@ closeCsvModal();
                       const promoOptions = [...employmentPromos].sort((a, b) => (a.name || "").localeCompare(b.name || ""));
 
                       return (
-                        <select
+                        <EwrSelectCompat
                           className="ewr-input"
                           disabled={disabled}
                           value={cur}
@@ -6843,7 +6844,7 @@ closeCsvModal();
                               {p.name}
                             </option>
                           ))}
-                        </select>
+                        </EwrSelectCompat>
                       );
                     };
 
@@ -6917,7 +6918,7 @@ closeCsvModal();
 
                             <div className="ewr-field">
                               <div className="ewr-label">Position</div>
-                              <select
+                              <EwrSelectCompat
                                 className="ewr-input"
                                 disabled={disabled}
                                 value={getNum(selectedWorker as any, `employer${slot}PositionRaw` as any) | 0}
@@ -6931,12 +6932,12 @@ closeCsvModal();
                                     {o.label}
                                   </option>
                                 ))}
-                              </select>
+                              </EwrSelectCompat>
                             </div>
 
                             <div className="ewr-field">
                               <div className="ewr-label">Disposition</div>
-                              <select
+                              <EwrSelectCompat
                                 className="ewr-input"
                                 disabled={disabled}
                                 value={getStr(selectedWorker as any, `employer${slot}Disposition` as any) || "F"}
@@ -6950,7 +6951,7 @@ closeCsvModal();
                                     {o.label}
                                   </option>
                                 ))}
-                              </select>
+                              </EwrSelectCompat>
                             </div>
 
                             <div className="ewr-field">
@@ -6960,7 +6961,7 @@ closeCsvModal();
 
                             <div className="ewr-field">
                               <div className="ewr-label">Manager</div>
-                              <select
+                              <EwrSelectCompat
                                 className="ewr-input"
                                 disabled={disabled}
                                 value={getNum(selectedWorker as any, `employer${slot}ManagerId` as any) | 0}
@@ -6975,12 +6976,12 @@ closeCsvModal();
                                     {getStr(m as any, "fullName") || `Worker ${(m as any).id}`}
                                   </option>
                                 ))}
-                              </select>
+                              </EwrSelectCompat>
                             </div>
 
                             <div className="ewr-field">
                               <div className="ewr-label">Gimmick</div>
-                              <select
+                              <EwrSelectCompat
                                 className="ewr-input"
                                 disabled={disabled}
                                 value={getNum(selectedWorker as any, `employer${slot}GimmickId` as any) | 0}
@@ -6994,7 +6995,7 @@ closeCsvModal();
                                     {g.name}
                                   </option>
                                 ))}
-                              </select>
+                              </EwrSelectCompat>
                               <button
                                 type="button"
                                 className="ewr-button"
@@ -7085,7 +7086,7 @@ closeCsvModal();
 
                               <div className="ewr-field" style={{ marginBottom: 0 }}>
                                 <div className="ewr-label">Status</div>
-                                <select
+                                <EwrSelectCompat
                                   className="ewr-input"
                                   disabled={saveContractFixDisabled}
                                   value={saveContractFixStatusAction}
@@ -7104,7 +7105,7 @@ closeCsvModal();
                                   <option value="no_change">Do Not Change</option>
                                   <option value="Available">Set to Available</option>
                                   <option value="Sitting Out Contract">Set to Sitting Out Contract</option>
-                                </select>
+                                </EwrSelectCompat>
                                 <div className="ewr-hint" style={{ marginTop: 6, marginBottom: 0 }}>
                                   Current stored status: <b>{currentEmploymentStatusLabel}</b> ({normalizedEmploymentStatusCode || "Nor"})
                                 </div>
@@ -7252,7 +7253,7 @@ closeCsvModal();
 
                               <div className="ewr-field">
                                 <div className="ewr-label">Primary Finisher Type</div>
-                                <select
+                                <EwrSelectCompat
                                   className="ewr-input"
                                   value={decodeFinisherTypeFromABC(
                                     getNum(selectedWorker as any, "pfTypeFlagA", "primaryFinisherTypeFlagA"),
@@ -7288,7 +7289,7 @@ closeCsvModal();
                                       {t}
                                     </option>
                                   ))}
-                                </select>
+                                </EwrSelectCompat>
                               </div>
                             </>
                           ) : null}
@@ -7320,7 +7321,7 @@ closeCsvModal();
 
                               <div className="ewr-field">
                                 <div className="ewr-label">Secondary Finisher Type</div>
-                                <select
+                                <EwrSelectCompat
                                   className="ewr-input"
                                   value={decodeFinisherTypeFromABC(
                                     getNum(selectedWorker as any, "sfTypeFlagA", "secondaryFinisherTypeFlagA"),
@@ -7356,7 +7357,7 @@ closeCsvModal();
                                       {t}
                                     </option>
                                   ))}
-                                </select>
+                                </EwrSelectCompat>
                               </div>
                             </>
                           ) : null}
@@ -7385,7 +7386,7 @@ closeCsvModal();
                           {AKey && BKey && CKey ? (
                             <div className="ewr-field">
                               <div className="ewr-label">Finisher Type</div>
-                              <select
+                              <EwrSelectCompat
                                 className="ewr-input"
                                 value={decodeFinisherTypeFromABC(
                                   getNum(selectedWorker as any, AKey),
@@ -7402,7 +7403,7 @@ closeCsvModal();
                                     {t}
                                   </option>
                                 ))}
-                              </select>
+                              </EwrSelectCompat>
                               <div className="ewr-hint">Stored via A/B/C flags (EWR style).</div>
                             </div>
                           ) : null}

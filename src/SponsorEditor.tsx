@@ -6,6 +6,7 @@ import LeftPanelSearchHeader from "./components/leftpanel/LeftPanelSearchHeader"
 import LeftPanelNameCard from "./components/leftpanel/LeftPanelNameCard";
 import LeftPanelActionGrid from "./components/leftpanel/LeftPanelActionGrid";
 
+import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 // Tauri v2 plugins
 import { open, save } from "@tauri-apps/plugin-dialog";
 import {readFile, writeFile, exists, copyFile, mkdir} from "@tauri-apps/plugin-fs";
@@ -1067,7 +1068,7 @@ async function onLoadFromData() {
 
         <div className="ewr-field">
           <div className="ewr-label">Morality preset</div>
-          <select
+          <EwrSelectCompat
             className="ewr-input"
             value={filterMoralityPreset}
             onChange={(e) => {
@@ -1089,7 +1090,7 @@ async function onLoadFromData() {
             <option value="low">Low Morality (0–33)</option>
             <option value="normal">Normal Morality (34–66)</option>
             <option value="high">High Morality (67–100)</option>
-          </select>
+          </EwrSelectCompat>
         </div>
 
         <div className="ewr-field">

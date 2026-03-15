@@ -14,6 +14,7 @@ import { parseNetworkDat, type NetworkRecord } from "./ewr/parseNetworkDat";
 import { validateNetworkDatBytes } from "./ewr/validateNetworkDat";
 import { writeNetworkDat } from "./ewr/writeNetworkDat";
 
+import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 function buildEwresBackupPath(path: string, suffix = ""): string {
   const normalized = String(path ?? "").replace(/\\/g, "/");
   const slash = normalized.lastIndexOf("/");
@@ -886,11 +887,11 @@ export default function NetworksEditor(props: Props) {
           <div className="ewr-filterTileGrid">
             <label className="ewr-filterTile ewr-filterTileStack">
               <span className="ewr-filterTileLabel">Generic</span>
-              <select className="ewr-input ewr-filterTileSelect" value={genericFilter} onChange={(e) => setGenericFilter(e.target.value as any)}>
+              <EwrSelectCompat className="ewr-input ewr-filterTileSelect" value={genericFilter} onChange={(e) => setGenericFilter(e.target.value as any)}>
                 <option value="">Any</option>
                 <option value="generic">Generic only</option>
                 <option value="standard">Non-generic only</option>
-              </select>
+              </EwrSelectCompat>
             </label>
           </div>
 

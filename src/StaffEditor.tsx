@@ -7,6 +7,7 @@ import LeftPanelSearchHeader from "./components/leftpanel/LeftPanelSearchHeader"
 import LeftPanelNameCard from "./components/leftpanel/LeftPanelNameCard";
 import LeftPanelActionGrid from "./components/leftpanel/LeftPanelActionGrid";
 import { IconChecklist, IconGrid, IconImport, IconPlus } from "./components/icons/EwrIcons";
+import EwrSelectCompat from "./components/inputs/EwrSelectCompat";
 // Tauri v2 plugins
 import { open, save } from "@tauri-apps/plugin-dialog";
 import {readFile, writeFile, exists, copyFile, mkdir} from "@tauri-apps/plugin-fs";
@@ -449,7 +450,7 @@ const renderFilterPanel = (onClose: () => void) => (
     <div className="ewr-filterGrid">
       <div className="ewr-field">
         <div className="ewr-label">Gender</div>
-        <select
+        <EwrSelectCompat
           className="ewr-input"
           value={draftFilters.gender}
           onChange={(e) => setDraftFilters((p) => ({ ...p, gender: e.target.value as any }))}
@@ -457,12 +458,12 @@ const renderFilterPanel = (onClose: () => void) => (
           <option value="Everyone">Any</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
-        </select>
+        </EwrSelectCompat>
       </div>
 
       <div className="ewr-field">
         <div className="ewr-label">Birth Month</div>
-        <select
+        <EwrSelectCompat
           className="ewr-input"
           value={draftFilters.birthMonth}
           onChange={(e) => setDraftFilters((p) => ({ ...p, birthMonth: e.target.value as any }))}
@@ -481,7 +482,7 @@ const renderFilterPanel = (onClose: () => void) => (
           <option value="10">October</option>
           <option value="11">November</option>
           <option value="12">December</option>
-        </select>
+        </EwrSelectCompat>
       </div>
 
       <div className="ewr-field">
@@ -592,7 +593,7 @@ const renderFilterPanel = (onClose: () => void) => (
 
       <div className="ewr-field">
         <div className="ewr-label">Works For</div>
-        <select
+        <EwrSelectCompat
           className="ewr-input"
           value={draftFilters.worksFor === "any" ? "any" : draftFilters.worksFor === "none" ? "none" : String(draftFilters.worksFor)}
           onChange={(e) => {
@@ -612,12 +613,12 @@ const renderFilterPanel = (onClose: () => void) => (
                 {p.name}
               </option>
             ))}
-        </select>
+        </EwrSelectCompat>
       </div>
 
       <div className="ewr-field">
         <div className="ewr-label">Contract Type</div>
-        <select
+        <EwrSelectCompat
           className="ewr-input"
           value={draftFilters.contractType}
           onChange={(e) => setDraftFilters((p) => ({ ...p, contractType: e.target.value as any }))}
@@ -626,12 +627,12 @@ const renderFilterPanel = (onClose: () => void) => (
           <option value="Written">Written</option>
           <option value="Open">Open</option>
           <option value="None">None</option>
-        </select>
+        </EwrSelectCompat>
       </div>
 
       <div className="ewr-field">
         <div className="ewr-label">Role</div>
-        <select
+        <EwrSelectCompat
           className="ewr-input"
           value={draftFilters.role}
           onChange={(e) => setDraftFilters((p) => ({ ...p, role: e.target.value as any }))}
@@ -645,7 +646,7 @@ const renderFilterPanel = (onClose: () => void) => (
           <option value="Writer">Writers</option>
           <option value="Road Agent">Road Agents</option>
           <option value="Trainer">Trainers</option>
-        </select>
+        </EwrSelectCompat>
       </div>
 
       <div className="ewr-field">
@@ -1843,19 +1844,19 @@ function onDeleteMultiSelected() {
 
               <div className="ewr-field">
                 <div className="ewr-label">Gender</div>
-                <select
+                <EwrSelectCompat
                   className="ewr-input"
                   value={selected.gender}
                   onChange={(e) => updateSelected({ gender: e.target.value as any })}
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
-                </select>
+                </EwrSelectCompat>
               </div>
 
               <div className="ewr-field">
                 <div className="ewr-label">Birth Month</div>
-                <select
+                <EwrSelectCompat
                   className="ewr-input"
                   value={selected.birthMonth}
                   onChange={(e) => updateSelected({ birthMonth: Number(e.target.value) })}
@@ -1865,7 +1866,7 @@ function onDeleteMultiSelected() {
                       {m.label}
                     </option>
                   ))}
-                </select>
+                </EwrSelectCompat>
               </div>
 
               <div className="ewr-field">
@@ -1932,7 +1933,7 @@ function onDeleteMultiSelected() {
               <div className="ewr-field">
                 <div className="ewr-label">Employer</div>
                 {promos.length ? (
-                  <select
+                  <EwrSelectCompat
                     className="ewr-input"
                     value={selected.employerId}
                     onChange={(e) => {
@@ -1947,7 +1948,7 @@ function onDeleteMultiSelected() {
                         {p.shortName || p.name}
                       </option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 ) : (
                   <input
                     className="ewr-input"
@@ -1965,19 +1966,19 @@ function onDeleteMultiSelected() {
 
               <div className="ewr-field">
                 <div className="ewr-label">Contract</div>
-                <select
+                <EwrSelectCompat
                   className="ewr-input"
                   value={selected.contract}
                   onChange={(e) => updateSelected({ contract: e.target.value as any })}
                 >
                   <option value="None">None</option>
                   <option value="Written">Written</option>
-                </select>
+                </EwrSelectCompat>
               </div>
 
               <div className="ewr-field">
                 <div className="ewr-label">Position</div>
-                <select
+                <EwrSelectCompat
                   className="ewr-input"
                   value={selected.position}
                   onChange={(e) => updateSelected({ position: e.target.value as any })}
@@ -1990,13 +1991,13 @@ function onDeleteMultiSelected() {
                   <option value="Writer">Writer</option>
                   <option value="Road Agent">Road Agent</option>
                   <option value="Trainer">Trainer</option>
-                </select>
+                </EwrSelectCompat>
               </div>
 
               {selected.position === "Owner" ? (
                 <div className="ewr-field">
                   <div className="ewr-label">Style</div>
-                  <select
+                  <EwrSelectCompat
                     className="ewr-input"
                     value={selected.ownerStyle}
                     onChange={(e) => updateSelected({ ownerStyle: e.target.value as any })}
@@ -2006,7 +2007,7 @@ function onDeleteMultiSelected() {
                         {s}
                       </option>
                     ))}
-                  </select>
+                  </EwrSelectCompat>
                 </div>
               ) : null }
             </div>

@@ -1,3 +1,5 @@
+import EwrSelectCompat from "../inputs/EwrSelectCompat";
+
 export type SortOption<T extends string> = { value: T; label: string };
 
 export type LeftPanelSearchHeaderProps<T extends string> = {
@@ -39,7 +41,7 @@ export default function LeftPanelSearchHeader<T extends string>(props: LeftPanel
           placeholder={props.searchPlaceholder ?? "Search"}
         />
         {showSort ? (
-          <select
+          <EwrSelectCompat
             className="ewr-input"
             value={props.sortValue}
             onChange={(e) => props.onSortChange?.(e.target.value as T)}
@@ -50,7 +52,7 @@ export default function LeftPanelSearchHeader<T extends string>(props: LeftPanel
                 {opt.label}
               </option>
             ))}
-          </select>
+          </EwrSelectCompat>
         ) : null}
       </div>
 

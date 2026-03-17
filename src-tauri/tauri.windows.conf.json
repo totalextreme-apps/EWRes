@@ -1,0 +1,14 @@
+{
+  "app": {
+    "windows": [
+      {
+        "title": "EWR Editing Suite",
+        "width": 1600,
+        "height": 900,
+        "resizable": true,
+        "fullscreen": false,
+        "devtools": true
+      }
+    ]
+  }
+}

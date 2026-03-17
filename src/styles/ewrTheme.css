@@ -1,0 +1,1680 @@
+/* src/styles/ewrTheme.css */
+
+:root {
+  --bg0: #070a10;
+  --bg1: #0a1430;
+
+  --panel: rgba(0, 0, 0, 0.18);
+  --panel2: rgba(20, 26, 38, 0.70);
+
+  --border: rgba(255, 255, 255, 0.10);
+  --border2: rgba(255, 255, 255, 0.14);
+
+  --text: rgba(255, 255, 255, 0.95);
+  --muted: rgba(255, 255, 255, 0.75);
+
+  --blueA: rgba(46, 91, 255, 0.85);
+  --blueB: rgba(20, 35, 120, 0.85);
+
+  --greenA: rgba(36, 190, 110, 0.85);
+  --greenB: rgba(12, 110, 60, 0.85);
+
+  --copyBorder: rgba(120, 200, 255, 0.55);
+  --copyBg: rgba(120, 200, 255, 0.14);
+
+  --redA: rgba(255, 70, 70, 0.14);
+  --redB: rgba(255, 70, 70, 0.60);
+
+  --pillBg: rgba(255, 255, 255, 0.06);
+}
+
+* { box-sizing: border-box; }
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--bg0);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+.ewr-app {
+  flex: 1 1 auto;
+  height: 100%;
+min-height: 0;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  background:
+    radial-gradient(1200px 800px at 20% 10%, rgba(46, 91, 255, 0.18), transparent 55%),
+    radial-gradient(1000px 700px at 80% 30%, rgba(255, 45, 45, 0.08), transparent 55%),
+    linear-gradient(180deg, var(--bg1), var(--bg0) 65%);
+  overflow: hidden;
+}
+
+/* Panels are flex columns; allow children to shrink */
+.ewr-panel {
+  height: 100%;
+  min-height: 0;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ewr-left { margin-right: 6px; }
+.ewr-main {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+  margin-left: 6px;
+}
+
+/* RIGHT PANEL MUST BE FLEX COLUMN (header fixed, body fills) */
+.ewr-panel.ewr-main {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.ewr-panelHeader {
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid var(--border);
+  flex: 0 0 auto;
+}
+
+.ewr-leftTopRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Keep Open/Save from being clipped in narrower sidebars */
+.ewr-leftTopActions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.ewr-leftTopActions .ewr-button {
+  white-space: nowrap;
+}
+
+/* Left panel context label (replaces the logo in the sidebar header) */
+.ewr-leftContext {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 180px;
+  flex: 1 1 180px;
+}
+
+.ewr-leftContextTitle {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  font-size: 16px;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.ewr-leftContextSub {
+  font-size: 12px;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.ewr-divider {
+  height: 1px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.10);
+  margin-top: 12px;
+}
+
+.ewr-leftBody {
+  padding: 12px 14px 14px;
+  flex: 0 0 auto;
+}
+
+/* LEFT PANEL: scrollable middle area (filters + worker list) */
+.ewr-leftMiddle {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+.ewr-leftFooter {
+  padding: 12px 14px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(0, 0, 0, 0.14);
+  flex: 0 0 auto;
+}
+
+
+
+/* Left footer button grid */
+.ewr-footerGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* External Editing menu (compact, two columns) */
+.ewr-externalMenu {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ewr-buttonYellow {
+  background: rgba(255, 200, 0, 0.12);
+  border: 1px solid rgba(255, 200, 0, 0.38);
+}
+
+
+/*
+  IMPORTANT:
+  .ewr-button is defined later in this file and sets a default background.
+  Use a more specific selector so "red" buttons stay red.
+*/
+.ewr-button.ewr-buttonRed {
+  background: linear-gradient(180deg, rgba(210, 64, 64, 0.95), rgba(140, 28, 28, 0.95));
+  border: 1px solid rgba(255, 120, 120, 0.35);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
+}
+.ewr-button.ewr-buttonRed:hover {
+  filter: brightness(1.05);
+}
+
+.ewr-button.ewr-buttonRed:active {
+  filter: brightness(0.85);
+  transform: translateY(1px);
+}
+
+
+.ewr-buttonYellow:hover {
+  background: rgba(255, 200, 0, 0.18);
+  border-color: rgba(255, 200, 0, 0.55);
+}
+.ewr-scroll {
+  overflow: auto;
+  min-height: 0;
+}
+
+.ewr-leftSearchRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.ewr-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border2);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  outline: none;
+}
+
+.ewr-input:focus {
+  border-color: rgba(46, 91, 255, 0.55);
+  box-shadow: 0 0 0 3px rgba(46, 91, 255, 0.18);
+}
+
+.ewr-inputError {
+  border-color: rgba(255, 70, 70, 0.70);
+  box-shadow: 0 0 0 3px rgba(255, 70, 70, 0.14);
+}
+
+.ewr-hintError {
+  color: rgba(255, 120, 120, 0.95);
+}
+
+select.ewr-input { cursor: pointer; }
+
+.ewr-button {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border2);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 950;
+  letter-spacing: 0.2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+}
+
+.ewr-button:active { transform: translateY(1px); }
+
+.ewr-buttonBlue {
+  background: linear-gradient(180deg, var(--blueA), var(--blueB));
+  border: 1px solid rgba(46, 91, 255, 0.55);
+}
+
+.ewr-buttonLightBlue {
+  background: linear-gradient(180deg, rgba(120, 210, 255, 0.95), rgba(55, 145, 245, 0.95));
+  border: 1px solid rgba(120, 210, 255, 0.65);
+}
+
+
+.ewr-buttonGreen {
+  background: linear-gradient(180deg, var(--greenA), var(--greenB));
+  border: 1px solid rgba(36, 190, 110, 0.55);
+}
+
+.ewr-buttonApply {
+  background: linear-gradient(180deg, rgba(255, 170, 40, 0.95), rgba(200, 110, 10, 0.95));
+  border: 1px solid rgba(255, 170, 40, 0.65);
+}
+
+.ewr-buttonApply:hover {
+  filter: brightness(1.06);
+}
+
+
+.ewr-muted { opacity: 0.78; }
+.ewr-strong { font-weight: 950; }
+
+.ewr-mainHeader {
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  flex: 0 0 auto;
+}
+
+.ewr-mainTitleBar {
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  font-weight: 950;
+}
+
+.ewr-mainMetaRow {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(0, 0, 0, 0.22);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.ewr-pillRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.ewr-pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--pillBg);
+  font-weight: 900;
+  font-size: 12px;
+  opacity: 0.95;
+}
+
+/* MAIN BODY: must fill remaining height of right panel */
+.ewr-mainBody {
+  padding: 16px;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* Mode-specific overflow */
+.ewr-mainBodyScroll {
+  overflow: auto;
+}
+
+.ewr-mainBodyGrid {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Critical: ensure first-level children in grid mode can shrink and allow the grid to take full height */
+.ewr-mainBodyGrid > * {
+  min-height: 0;
+}
+
+.ewr-h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 950;
+  letter-spacing: 0.2px;
+}
+
+.ewr-subtitle {
+  margin-top: 6px;
+  font-size: 13px;
+  opacity: 0.82;
+}
+
+.ewr-section {
+  margin-top: 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(20, 26, 38, 0.55);
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+}
+
+/* Allow specific sections to let popovers/dropdowns overflow (e.g. Skills compare dropdown) */
+.ewr-sectionOverflowVisible {
+  overflow: visible;
+}
+
+.ewr-sectionHeader {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.ewr-sectionTitle {
+  font-weight: 950;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  opacity: 0.95;
+}
+
+.ewr-sectionBody { padding: 12px; }
+
+.ewr-label {
+  font-size: 12px;
+  opacity: 0.80;
+  margin-bottom: 6px;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+}
+
+.ewr-grid { display: grid; gap: 14px; }
+.ewr-gridAuto { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+.ewr-field { min-width: 0; }
+
+/* Simple dropdown for autocomplete/select lists (used by Teams editor partner pickers) */
+.ewr-dropdown {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  background: rgba(12, 16, 24, 0.96);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.ewr-dropdownItem {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ewr-dropdownItem:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ewr-dropdownItem:last-child {
+  border-bottom: none;
+}
+
+.ewr-photoRow {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.ewr-hint { margin-top: 6px; font-size: 12px; opacity: 0.70; }
+
+/* ---------------- Sponsor Analysis table ---------------- */
+.ewr-analysisTable {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.ewr-analysisRow {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr 1fr 1fr;
+  align-items: center;
+}
+
+.ewr-analysisHeader {
+  background: rgba(255, 255, 255, 0.06);
+  font-weight: 800;
+}
+
+.ewr-analysisCell {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  text-align: center;
+  letter-spacing: 0.2px;
+}
+
+.ewr-analysisCell--range {
+  text-align: left;
+  font-weight: 700;
+}
+
+.ewr-analysisRow:last-child .ewr-analysisCell {
+  border-bottom: none;
+}
+
+/* ---------------- Tag Teams table (Wrestlers Editor) ---------------- */
+.ewr-tagTeamsTable{
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.ewr-tagTeamsRow{
+  display: grid;
+  grid-template-columns: 1.6fr 1.4fr 0.6fr;
+  align-items: center;
+}
+
+.ewr-tagTeamsHeader{
+  background: rgba(255, 255, 255, 0.06);
+  font-weight: 800;
+}
+
+.ewr-tagTeamsCell{
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  text-align: left;
+  letter-spacing: 0.2px;
+}
+
+.ewr-tagTeamsCell--name{
+  font-weight: 900;
+}
+
+.ewr-tagTeamsRow:last-child .ewr-tagTeamsCell{
+  border-bottom: none;
+}
+.ewr-warn { margin-top: 6px; font-size: 12px; font-weight: 950; color: #ff4d4d; }
+
+.ewr-workerPhotoCard,
+.ewr-workerPhotoSection {
+  margin: 14px 0 18px;
+}
+
+.ewr-workerPhotoSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.ewr-workerPhotoActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.ewr-workerPhotoLayout {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.ewr-workerPhotoPreviewCol {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ewr-workerPhotoPreviewFrame {
+  width: 140px;
+  min-height: 140px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ewr-workerPhotoPreviewImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ewr-workerPhotoBrowseBtn {
+  width: 140px;
+}
+
+.ewr-workerPhotoMetaCol {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.ewr-workerPhotoNameActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ewr-workerPhotoPreviewEmpty {
+  padding: 18px;
+  text-align: center;
+  opacity: 0.75;
+  font-weight: 800;
+}
+
+.ewr-championshipsRow {
+  grid-template-columns: 1.5fr 1.1fr 1fr;
+}
+
+@media (max-width: 900px) {
+  .ewr-workerPhotoLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .ewr-workerPhotoPreviewCol {
+    width: 140px;
+  }
+}
+
+
+
+.ewr-stablesMembersTable{
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.ewr-stablesMembersRow{
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1.6fr) 160px 180px;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.ewr-stablesMembersRow:last-child{
+  border-bottom: none;
+}
+
+.ewr-stablesMembersHeader{
+  background: rgba(255, 255, 255, 0.06);
+  font-weight: 800;
+}
+
+.ewr-stablesMembersCell{
+  padding: 12px 14px;
+  text-align: left;
+  letter-spacing: 0.2px;
+}
+
+.ewr-stablesMembersCell--name{
+  font-weight: 900;
+}
+
+/* Worker list rows */
+.ewr-workerRow {
+  padding: 8px 10px;
+  border-radius: 12px;
+  margin-bottom: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+}
+
+.ewr-workerRowActive {
+  border: 1px solid rgba(46, 91, 255, 0.55);
+  background: rgba(46, 91, 255, 0.14);
+  box-shadow: 0 0 0 1px rgba(46, 91, 255, 0.25);
+}
+
+.ewr-workerRowInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ewr-workerName {
+  font-weight: 950;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  line-height: 1.2;
+}
+
+/* Icon buttons (copy/delete) */
+.ewr-iconBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.ewr-iconBtn:active { transform: translateY(1px); }
+
+.ewr-iconBtnBlue {
+  border: 1px solid var(--copyBorder);
+  background: var(--copyBg);
+}
+
+.ewr-iconBtnRed {
+  border: 1px solid var(--redB);
+  background: var(--redA);
+}
+
+/* SVG sizing used by App.tsx */
+.btnSvg { width: 22px; height: 22px; }
+.iconBtnSvg { width: 22px; height: 22px; }
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .ewr-app { grid-template-columns: 340px 1fr; }
+}
+
+@media (max-width: 900px) {
+  .ewr-app { grid-template-columns: 1fr; }
+  .ewr-left { margin: 12px; margin-bottom: 6px; }
+  .ewr-main { margin: 12px; margin-top: 6px; }
+  .ewr-photoRow { grid-template-columns: 1fr; }
+}
+
+
+/* ---------- Filters (left panel) ---------- */
+
+.ewr-filterToggleRow {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ewr-filterToggleBtn {
+  flex: 1;
+  text-align: left;
+}
+
+.ewr-filterToggleActions {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.ewr-filterInline {
+  display: flex;
+  gap: 8px;
+}
+
+.ewr-filterSection {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.ewr-filterFlagRow {
+  display: grid;
+  grid-template-columns: 1fr 120px;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.ewr-filterFlagLabel {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.ewr-filterTiny {
+  font-size: 12px;
+  opacity: 0.78;
+  font-weight: 700;
+}
+.ewr-filterPanel {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+
+.ewr-filterPanelCompact {
+  max-height: 260px;
+  overflow: auto;
+  padding-right: 6px;
+}
+.ewr-filterHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.ewr-filterTitle {
+  font-weight: 950;
+  letter-spacing: 0.2px;
+}
+
+.ewr-filterHeaderActions {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.ewr-buttonSmall {
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-weight: 900;
+}
+
+.ewr-filterGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.ewr-filterSkills {
+  margin-top: 10px;
+}
+
+.ewr-filterSubTitle {
+  font-size: 12px;
+  opacity: 0.78;
+  margin: 0 0 8px;
+}
+
+.ewr-filterSkillRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.ewr-filterActionsRow {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.ewr-filterTileGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+.ewr-filterTile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  line-height: 1.15;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.ewr-filterTileStack {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.ewr-filterTileLabel {
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  font-size: 13px;
+  line-height: 1.2;
+  opacity: 0.95;
+  user-select: none;
+  flex: 1 1 auto;
+}
+
+.ewr-filterTileStack .ewr-filterTileLabel {
+  flex: 0 0 auto;
+}
+
+.ewr-filterTileControl {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.ewr-filterTileSelect {
+  width: 100%;
+  min-width: 0;
+  flex: 0 0 auto;
+}
+
+.ewr-filterTileDisabled {
+  opacity: 0.58;
+}
+
+
+
+/* ---------- Import modal ---------- */
+.ewr-modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+.ewr-modal {
+  width: min(760px, 96vw);
+  max-height: 90vh;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(14, 14, 18, 0.96);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.ewr-modalHeader {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ewr-modalTitle {
+  font-size: 14px;
+  font-weight: 950;
+  letter-spacing: 0.2px;
+}
+
+.ewr-modalSub {
+  font-size: 12px;
+  opacity: 0.78;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ewr-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.ewr-modalBody {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  flex: 1;
+}
+
+.ewr-modalList {
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px;
+  overflow: auto;
+  min-height: 140px;
+  flex: 1;
+}
+
+.ewr-importRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ewr-importRow:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ewr-importRow input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.ewr-importName {
+  font-weight: 900;
+  letter-spacing: 0.2px;
+}
+
+.ewr-importInfo {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 170, 40, 0.30);
+  background: rgba(255, 170, 40, 0.10);
+  padding: 10px 12px;
+  font-size: 12px;
+  opacity: 0.92;
+}
+
+.ewr-modalFooter {
+  padding: 12px 16px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.ewr-modal .ewr-iconBtn {
+  width: 36px;
+  height: 36px;
+  font-size: 22px;
+  font-weight: 950;
+}
+
+/* --- Skills comparison (Profile view) --- */
+.ewr-compareBlock {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ewr-compareRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ewr-compareLabel {
+  font-size: 12px;
+  opacity: 0.85;
+  font-weight: 800;
+}
+
+.ewr-compareInput {
+  width: 360px;
+  max-width: 100%;
+}
+
+
+.ewr-compareCombo {
+  position: relative;
+  width: 360px;
+  max-width: 100%;
+}
+
+.ewr-compareDropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  max-height: 260px;
+  overflow: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(10, 12, 18, 0.95);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+  padding: 6px;
+  /* must sit above subsequent sections/cards */
+  z-index: 9999;
+}
+
+.ewr-compareOption {
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  opacity: 0.92;
+  user-select: none;
+}
+
+.ewr-compareOption:hover,
+.ewr-compareOption.isActive {
+  background: rgba(255, 255, 255, 0.10);
+  opacity: 1;
+}
+.ewr-comparePanel {
+  margin-top: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(14, 18, 28, 0.60);
+  padding: 12px;
+}
+
+.ewr-comparePanelTitle {
+  font-size: 12px;
+  opacity: 0.88;
+  margin-bottom: 10px;
+}
+
+.ewr-compareStat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-radius: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(10, 12, 18, 0.30);
+}
+
+.ewr-compareValue {
+  font-size: 14px;
+  font-weight: 900;
+  opacity: 0.95;
+}
+
+.ewr-compareDelta {
+  font-size: 12px;
+  font-weight: 900;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  opacity: 0.95;
+}
+
+/* no explicit colors (keeps theme neutral); border intensity only */
+.ewr-compareDelta[data-sign="pos"] {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.ewr-compareDelta[data-sign="neg"] {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.ewr-compareDelta[data-sign="zero"] {
+  opacity: 0.75;
+}
+
+/* =========================================
+   Scrollbar theming (Windows/WebView2 + Chromium)
+   ========================================= */
+
+/* Firefox (harmless elsewhere) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+}
+
+/* Chromium / WebView2 */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  border: 2px solid rgba(0, 0, 0, 0.35);
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.28);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: rgba(255, 255, 255, 0.34);
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* ---------- App wrapper ---------- */
+.ewr-root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ---------- Global section navigation ---------- */
+.ewr-globalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    radial-gradient(700px 140px at 20% 50%, rgba(46, 91, 255, 0.20), transparent 60%),
+    radial-gradient(700px 140px at 80% 40%, rgba(255, 45, 45, 0.10), transparent 60%),
+    linear-gradient(180deg, rgba(20, 26, 38, 0.75), rgba(0, 0, 0, 0.25));
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+}
+
+.ewr-globalTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+.ewr-globalLogo {
+  height: 34px;
+  max-height: 48px;
+  object-fit: contain;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.55));
+}
+
+.ewr-globalHeader-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.ewr-navBtn {
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.25) inset,
+    0 10px 18px rgba(0, 0, 0, 0.28);
+}
+
+.ewr-navBtn:hover {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.ewr-navBtn:active {
+  transform: translateY(1px);
+}
+
+/* Active nav button (support both the old class name and the newer BEM variant) */
+.ewr-navBtnActive,
+.ewr-navBtn--active {
+  background:
+    linear-gradient(180deg, rgba(46, 91, 255, 0.35), rgba(0, 0, 0, 0.15));
+  border-color: rgba(120, 200, 255, 0.42);
+  color: rgba(255, 255, 255, 0.98);
+  box-shadow:
+    0 0 0 1px rgba(120, 200, 255, 0.22) inset,
+    0 0 0 1px rgba(0, 0, 0, 0.25),
+    0 12px 22px rgba(0, 0, 0, 0.35);
+}
+
+
+/* ---------------- Layout fixes (no outer scrollbar without breaking panels) ---------------- */
+
+/* Make root a column flex container so the global header + .ewr-app share the window cleanly */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Header should not grow the page; app fills remaining space */
+.ewr-globalHeader { flex: 0 0 auto; }
+.ewr-app { flex: 1 1 auto; min-height: 0; }
+
+/* Keep the top nav on a single row; allow horizontal scroll instead of increasing header height */
+.ewr-globalHeader-nav {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.ewr-globalHeader-nav::-webkit-scrollbar { display: none; }
+
+/* Constrain header logo even if the class name changes */
+.ewr-globalTitle img,
+.ewr-globalLogo,
+.ewr-headerLogo {
+  height: 34px;
+  max-height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Ensure left header action buttons stay side-by-side */
+.ewr-leftTopRow {
+  justify-content: space-between;
+  min-width: 0;
+}
+.ewr-leftTopActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.ewr-leftTopActions > button {
+  white-space: nowrap;
+}
+
+/* ---------------- Scroll containment fix ----------------
+   The app uses an inner wrapper (.ewr-root) that contains the global header + section bodies.
+   #root is flex now, but .ewr-root must ALSO be a flex column, otherwise the section bodies
+   can't get a constrained height and inner panels won't scroll.
+*/
+.ewr-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.ewr-root > .ewr-globalHeader {
+  flex: 0 0 auto;
+}
+
+/* The currently visible section wrapper (block/none divs) should take remaining space */
+.ewr-root > :not(.ewr-globalHeader) {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Ensure the main grid fills the available height so left/right internal scroll works */
+.ewr-app {
+  height: 100%;
+}
+
+.ewr-buttonWide { width: 100%; }
+.ewr-buttonDisabled { opacity: 0.55; cursor: not-allowed; }
+
+/* Left panel: top controls 2x2 grid (context + buttons) */
+.ewr-leftTopGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.ewr-leftTopStack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Global header: wrap (Option B) */
+.ewr-globalHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ewr-globalHeader-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ewr-globalHeader-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ewr-workspaceBadge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+  font-weight: 900;
+  opacity: 0.9;
+}
+
+
+/* Staff header 2x2 grid (mock parity) */
+.ewr-leftTopGridAreas {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    "ctx load"
+    "open save";
+  gap: 10px;
+  align-items: start;
+}
+
+.ewr-leftTopCtx { grid-area: ctx; }
+.ewr-leftTopLoad { grid-area: load; }
+.ewr-leftTopOpen { grid-area: open; }
+.ewr-leftTopSave { grid-area: save; }
+
+.ewr-leftTopGridAreas .ewr-button {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.ewr-listRowButton { cursor: pointer; }
+
+
+/* --- Staff Editor: shared panel messaging --- */
+.ewr-panelSub {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.ewr-panelStatusText {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.20);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.ewr-checkboxLabel{display:flex;align-items:center;gap:10px;}
+.ewr-checkboxLabel span{user-select:none;}
+
+
+
+/* --- Vertical sidebar shell (App-wide layout) --- */
+.ewr-shell{
+  display:flex;
+  height:100vh;
+  width:100%;
+  overflow:hidden;
+}
+
+.ewr-sideNav{
+  width: 230px;
+  min-width: 230px;
+  max-width: 230px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.92) 55%, rgba(0,0,0,0.88) 100%);
+  border-right: 1px solid rgba(255,255,255,0.08);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+.ewr-sideNavTop{
+  padding: 14px 12px 10px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.ewr-sideLogo{
+  width: 150px;
+  height: auto;
+  opacity: 0.95;
+}
+
+.ewr-sideNavActions{
+  padding: 0 12px 10px 12px;
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+}
+
+.ewr-sideActionBtn{
+  width:100%;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 12px;
+  padding: 10px 10px;
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.95);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Sidebar workspace buttons: match "Load From Data" look */
+.ewr-sideActionBtn--blue{
+  background: linear-gradient(180deg, rgba(120, 210, 255, 0.95), rgba(55, 145, 245, 0.95));
+  border: 1px solid rgba(120, 210, 255, 0.65);
+}
+
+/* Darker blue variant (Reset Path) */
+.ewr-sideActionBtn--blueDark{
+  background: linear-gradient(180deg, rgba(20, 35, 120, 0.95), rgba(8, 18, 70, 0.95));
+  border: 1px solid rgba(46, 91, 255, 0.55);
+}
+
+.ewr-sideActionBtn:hover{
+  filter: brightness(1.06);
+}
+
+.ewr-sideActionBtn:active{
+  filter: brightness(0.98);
+}
+
+.ewr-sideActionBtn--disabled{
+  opacity: 0.45;
+  cursor: default;
+}
+
+.ewr-sideActionBtn--disabled:hover{ background: inherit; }
+
+.ewr-sidePath{
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.2;
+  color: rgba(255,255,255,0.65);
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
+  word-break: break-word;
+  max-height: 64px;
+  overflow: hidden;
+}
+
+.ewr-sideNavList{
+  padding: 6px 10px 12px 10px;
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+  overflow:auto;
+}
+
+.ewr-sideNavGroupLabel{
+  padding: 10px 10px 6px 10px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+
+.ewr-sideNavBtn{
+  width:100%;
+  text-align:left;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.03);
+  color: rgba(255,255,255,0.90);
+  font-weight: 700;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap: 12px;
+}
+
+.ewr-sideNavIcon{
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  flex: 0 0 auto;
+}
+
+.ewr-sideNavIconSvg{
+  color: rgba(255,255,255,0.75);
+}
+
+.ewr-sideNavText{
+  font-size: 14px;
+  line-height: 1.1;
+}
+
+.ewr-sideNavBtn:hover{
+  background: rgba(255,255,255,0.06);
+}
+
+.ewr-sideNavBtn:active{
+  background: rgba(255,255,255,0.035);
+}
+
+.ewr-sideNavBtn--active{
+  background: rgba(80, 160, 255, 0.18);
+  border-color: rgba(80, 160, 255, 0.42);
+  color: rgba(255,255,255,0.98);
+}
+
+.ewr-sideNavBtn--active .ewr-sideNavIcon{
+  background: rgba(80, 160, 255, 0.20);
+  border-color: rgba(80, 160, 255, 0.30);
+}
+
+.ewr-sideNavBtn--active .ewr-sideNavIconSvg{
+  color: rgba(255,255,255,0.92);
+}
+
+.ewr-main{
+  flex:1;
+  min-width:0;
+  overflow:hidden;
+}
+
+@media (max-width: 860px) {
+  .ewr-photoRow { grid-template-columns: 1fr; }
+  .ewr-workerPhotoCardHeader { flex-direction: column; }
+  .ewr-workerPhotoActions { justify-content: flex-start; }
+  .ewr-workerPhotoPreviewFrame { width: 100%; min-height: 240px; }
+}
+
+.ewr-select {
+  position: relative;
+  width: 100%;
+}
+
+.ewr-selectButton {
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ewr-selectButtonLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 1 auto;
+}
+
+.ewr-selectChevron {
+  margin-left: 10px;
+  opacity: 0.85;
+  flex: 0 0 auto;
+}
+
+.ewr-selectMenu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  max-height: 280px;
+  overflow: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border2);
+  background: linear-gradient(180deg, rgba(12, 18, 34, 0.98), rgba(8, 12, 22, 0.98));
+  box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+  padding: 6px;
+}
+
+.ewr-selectOption {
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.ewr-selectOption:hover,
+.ewr-selectOption:focus-visible {
+  background: rgba(46, 91, 255, 0.22);
+  outline: none;
+}
+
+.ewr-selectOption.is-selected {
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.ewr-selectOption:disabled,
+.ewr-selectButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

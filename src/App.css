@@ -1,0 +1,264 @@
+:root {
+  --bg0: #070a10;
+  --bg1: #0a1430;
+  --bg2: #061026;
+
+  --panel: rgba(20, 26, 38, 0.72);
+  --panel2: rgba(14, 18, 28, 0.78);
+
+  --border: rgba(255, 255, 255, 0.10);
+  --border2: rgba(255, 255, 255, 0.14);
+
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.65);
+
+  --accentBlue: #2e5bff;
+  --accentRed: #ff2d2d;
+
+  --inputBg: rgba(255, 255, 255, 0.06);
+  --inputBg2: rgba(255, 255, 255, 0.09);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  background:
+    radial-gradient(1200px 800px at 20% 10%, rgba(46, 91, 255, 0.20), transparent 55%),
+    radial-gradient(1000px 700px at 80% 30%, rgba(255, 45, 45, 0.10), transparent 55%),
+    linear-gradient(180deg, var(--bg1), var(--bg0) 65%);
+}
+
+/* Shell layout */
+.appShell {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topBar {
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  backdrop-filter: blur(10px);
+}
+
+.brandTitle {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+.brandSub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.topBarLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.topBarRight {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--border2);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.btn:hover { background: rgba(255, 255, 255, 0.10); }
+.btn:active { transform: translateY(1px); }
+.btnPrimary {
+  border-color: rgba(46, 91, 255, 0.45);
+  background: rgba(46, 91, 255, 0.18);
+}
+.btnDanger {
+  border-color: rgba(255, 45, 45, 0.45);
+  background: rgba(255, 45, 45, 0.12);
+}
+
+.content {
+  flex: 1;
+  min-height: 0;               /* IMPORTANT: enables children scrolling */
+  display: flex;
+}
+
+.sidebar {
+  width: 360px;
+  min-width: 300px;
+  border-right: 1px solid var(--border);
+  background: rgba(0,0,0,0.22);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;               /* IMPORTANT */
+}
+
+.sidebarHeader {
+  padding: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.searchInput {
+  width: 100%;
+  border: 1px solid var(--border2);
+  background: var(--inputBg);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 12px;
+  outline: none;
+}
+.searchInput:focus {
+  border-color: rgba(46, 91, 255, 0.60);
+  box-shadow: 0 0 0 3px rgba(46, 91, 255, 0.20);
+}
+
+.workerList {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 10px;
+}
+
+.workerRow {
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  border-radius: 14px;
+  padding: 12px 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.workerRow:hover { background: rgba(255,255,255,0.06); }
+.workerRowActive {
+  border-color: rgba(46, 91, 255, 0.55);
+  background: rgba(46, 91, 255, 0.12);
+}
+
+.workerName {
+  font-weight: 900;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.workerMeta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Main panel */
+.mainPanel {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;              /* IMPORTANT: if fields "disappear", they were clipped */
+  padding: 16px;
+}
+
+.panelCard {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  border-radius: 18px;
+  padding: 16px;
+  backdrop-filter: blur(12px);
+}
+
+.panelTitle {
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+.panelSubtitle {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+/* Section header with subtle EWR nod (thin red/blue bar) */
+.section {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+}
+.sectionBar {
+  width: 10px;
+  height: 18px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, var(--accentRed), var(--accentBlue));
+  box-shadow: 0 0 18px rgba(46, 91, 255, 0.22);
+}
+
+/* Grid of fields */
+.fieldGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px 12px;
+}
+@media (max-width: 1100px) {
+  .fieldGrid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 860px) {
+  .sidebar { display: none; }
+  .fieldGrid { grid-template-columns: 1fr; }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 700;
+}
+.input, .select {
+  border: 1px solid var(--border2);
+  background: var(--inputBg);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 12px;
+  outline: none;
+}
+.input:focus, .select:focus {
+  border-color: rgba(46, 91, 255, 0.60);
+  box-shadow: 0 0 0 3px rgba(46, 91, 255, 0.18);
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel2);
+}
+
+.hint {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}

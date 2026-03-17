@@ -41,3 +41,15 @@ src/ewr/wrestler_dat_schema.BROKEN.*
 # macOS
 .DS_Store
 .DS_Store
+.DS_Store
+**/.DS_Store
+._*
+**/._*
+Thumbs.db
+**/Thumbs.db
+.DS_Store
+**/.DS_Store
+._*
+**/._*
+Thumbs.db
+**/Thumbs.db

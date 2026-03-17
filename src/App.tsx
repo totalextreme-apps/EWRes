@@ -1838,9 +1838,11 @@ const [isSaveWorkspace, setIsSaveWorkspace] = useState<boolean>(false);
   }
 
   function handlePromosChanged(records: PromoRecord[]) {
-    // Build the new Promo list used by dropdowns.
-    const newPromos: Promo[] = records.map((r, i) => ({
-      id: i + 1,
+    // Build the new Promo list used by dropdowns using the native promotion IDs
+    // stored in promos.dat. Wrestler employment fields reference these IDs, not
+    // the file row position.
+    const newPromos: Promo[] = records.map((r) => ({
+      id: Number(r.id ?? 0) | 0,
       name: (r.name ?? "").trim(),
       shortName: (r.initials ?? "").trim(),
     }));
